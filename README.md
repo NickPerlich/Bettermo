@@ -2,7 +2,7 @@
 ## Contributers:
 Nick Perlich - nperlich@calpoly.edu
 Nicholas Hotelling - nhotelli@calpoly.edu
-Pau
+Pau Minguet - pminguet@calpoly.edu
 Joe Simopoulus
 
 ## Project Description
