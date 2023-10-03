@@ -3,7 +3,7 @@
 Nick Perlich - nperlich@calpoly.edu
 Nicholas Hotelling - nhotelli@calpoly.edu
 Pau Minguet - pminguet@calpoly.edu
-Joe Simopoulus
+Joe Simopoulus - jsimopou@calpoly.edu
 
 ## Project Description
 The project will be a web-application for organizing shared expenses between groups of people like roommates.
