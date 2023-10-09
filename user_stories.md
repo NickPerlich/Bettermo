@@ -5,4 +5,4 @@ User Stories:
 2.) As a parent with 4 kids, I want my kids to learn financial responsibility. Having the ability for my kids to offer money to each other in exchange for things between each other could teach them the value of money, services, and things (like toys). (I don't actually condone this behavior)
 
 3.) Exception: Accidental Money Transfer
-    If a user accidentally types in an extra 0 into a money charge, the user and go and edit the most recent charge to fix the charge that was given to the group.
+If a user accidentally types in an extra 0 into a money charge, the user and go and edit the most recent charge to fix the charge that was given to the group.
