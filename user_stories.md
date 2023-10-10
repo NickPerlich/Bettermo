@@ -14,7 +14,9 @@
 
 1. Accidental Money Transfer: If a user accidentally types in an extra 0 into a money charge, the user can go and edit the most recent charge to fix the charge that was given to the group.
 2. Unnecessary transactions: If two users owe each other money, there is no need for them both to send money to the other. The service will determine which of the two owes the other money, and how much they owe after deducting the proper balances.
-5. An exception can be raised when there is an issue with creating a new expense. It can encompass various scenarios, such as missing information or a failure to update balances.
-6. An exception can be raised when a user attempts to access a group that doesn't exist or is not a member of.
+3. An exception can be raised when there is an issue with creating a new expense. It can encompass various scenarios, such as missing information or a failure to update balances.
+4. An exception can be raised when a user attempts to access a group that doesn't exist or is not a member of.
+5. Incomplete account: If a user attempts to create an account without wanting to share information such as email, phone-number, etc., there may be an issue. We should allow partial accounts that have a bare minimum needed to identify them, and allow limited use with such accounts, depending on what information is missing. This will allow parts of the application's functionality to be used without a full account.
+6. No account: If a non-user wishes to view a user's account or expenses without creating an account themselves, we have no way of knowing whether there may be a bad actor. We should allow group owners to set the visibility of groups to either public or private, so that users without accounts can still view public groups without exposing private groups.
 
 
