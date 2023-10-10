@@ -11,6 +11,7 @@
 9. As a party thrower, I enjoy keeping track of who attended, and, even if we don't clear the debt immediately (someone else might be taking on the expense next time), we can clear the debt at the end of the quarter.
 10. As a lazy person, I like to click a single button and have all my debts cleared, and not have to worry about the exact amount or arguing on iMessage with three different people over $2.34.
 11. As a bad boyfriend, I like to keep track of how much half of the dates cost and request the exact amount the moment she breaks up with me.
+12. As a good boyfriend, I like to be able to keep track of when my girlfriend buys groceries, so I can pay her back.
 
 
 ## Exceptions:
@@ -25,3 +26,5 @@
 8. Error in bookkeeping: the math that converts debt from A to B and from B to C into debt from A to C could be erroneous.
 9. Error in a transaction: if the app were to be linked to Paypal or a similar service, the app could remove the debt and then the payment fail.
 10. No debt forgiveness: there could be a mistaken debt or debt cleared with cash in person, but the app won't let it be cleared without a payment through it.
+11. Multiple Payment types: In order to keep track of what type of payment was used for each transaction, we should log the payment including a payment type.
+12. Spam Requests: as an average internet enjoyer, I spam the submit button on forms when they don't immediately react. To handle this, the application should be robust when confronted with repeated identical requests.
