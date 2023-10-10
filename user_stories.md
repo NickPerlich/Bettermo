@@ -13,6 +13,8 @@
 ## Exceptions:
 
 1. Accidental Money Transfer: If a user accidentally types in an extra 0 into a money charge, the user can go and edit the most recent charge to fix the charge that was given to the group.
-2. An exception can be raised when there is an issue with creating a new expense. It can encompass various scenarios, such as missing information or a failure to update balances.
-3. An exception can be raised when a user attempts to access a group that doesn't exist or is not a member of.
+2. Unnecessary transactions: If two users owe each other money, there is no need for them both to send money to the other. The service will determine which of the two owes the other money, and how much they owe after deducting the proper balances.
+5. An exception can be raised when there is an issue with creating a new expense. It can encompass various scenarios, such as missing information or a failure to update balances.
+6. An exception can be raised when a user attempts to access a group that doesn't exist or is not a member of.
+
 
