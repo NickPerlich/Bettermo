@@ -30,11 +30,20 @@ Now, Jacob can use this group with our service to post purchases as required.
 
 ## 2: Logging Group Purchase Example Flow
 ### Background
+Bart is a 16-year-old who has to make dinner for his two brothers (Phil and Tim) and his parents (Lisa and Chris) once a week. He is a part of a group with his family where Chris is the owner. He just went to the store and got the ingredients to make a scrumptious lasagna. Fortunately, he remembered to keep the receipt and is now sitting at his kitchen counter needing to log a purchase with his family. Unfortunately, he overdrafted his account and is going to ask his brothers to resolve their balances, which they will need to agree to.
 
 ### User Goal
-
+Bart wants to log a purchase with his family. 
 
 ### API Calls
+Family Group Id: 3
+Bart User Id: 4, Phil User Id: 5, Tim User Id: 6
+Bart calls POST /groups/3/user/4 with the total value of the receipt passed in as the body.
+then Bart calls GET /users/4/balances/5 to get the Balance between him and Phil
+then Bart sees that he is still in the red so he does not resolve the transaction.
+then Bart calls GET /users/4/balances/6 to get the Balance between him and Tim
+then Bart sees that is is likewise still in the red with Tim.
+Bart is sad.
 
 ## 3: Resolving Balance Example Flow
 ### Background
