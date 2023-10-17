@@ -47,8 +47,11 @@ Bart is sad.
 
 ## 3: Resolving Balance Example Flow
 ### Background
-
+Jimmy and Jerry are roommates and Jimmy wants to pay back Jerry for dinner. Thus, Jimmy attempts to settle his debt with Jerry so that when Jerry checks who has attempted to settle debt he can accept or decline the settlement. 
 ### User Goal
-
+Jimmy wants to attempt to settle his debt to Jerry. 
 
 ### API Calls
+Roommate Group Id: 4
+Jimmy User Id: 1, Jerry User Id: 2
+Jimmy calls POST /users/2/balances/1 to make an attempt to settle his debt with Jerry.
