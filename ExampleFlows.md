@@ -54,4 +54,6 @@ Jimmy wants to attempt to settle his debt to Jerry.
 ### API Calls
 Roommate Group Id: 4
 Jimmy User Id: 1, Jerry User Id: 2
+Jimmy calls GET /users/2/balances/1 to get the Balance between him and Jerry.
+Jimmy pays Jerry on Venmo (sponsor us please).
 Jimmy calls POST /users/2/balances/1 to make an attempt to settle his debt with Jerry.
