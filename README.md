@@ -1,4 +1,4 @@
-# csc365-group-project
+# Bettermo
 ## Contributers:
 Nick Perlich - nperlich@calpoly.edu
 Nicholas Hotelling - nhotelli@calpoly.edu
