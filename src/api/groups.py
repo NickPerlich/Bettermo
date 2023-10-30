@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends
-from enum import Enum
 from pydantic import BaseModel
 #from src.api import auth
 import sqlalchemy
@@ -23,4 +22,3 @@ def post_deliver_bottles(newgroup: Group):
         id = connection.execute(sqlalchemy.text("INSERT INTO groups (name, description) VALUES ("+newgroup.name+", "+newgroup.description+") RETURNING id")).scalar_one()
    
     return {'new_group_id': id}
-
