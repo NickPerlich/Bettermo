@@ -15,7 +15,7 @@ Now, Jacob can use this group with our service to post purchases as required.
 
 
 # Testing results
-1. curl --location 'http://localhost:3000/users' \
+1. curl --location 'http://better-mo.onrender.com/users' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "jacob",
@@ -23,7 +23,7 @@ Now, Jacob can use this group with our service to post purchases as required.
     "phone": "1234"
 }'
 result: {"new_user_id":7}
-2. curl --location 'http://localhost:3000/users' \
+2. curl --location 'http://better-mo.onrender.com/users' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "Nick",
@@ -31,7 +31,7 @@ result: {"new_user_id":7}
     "phone": "1234"
 }'
 result: {"new_user_id":8}
-3. curl --location 'http://localhost:3000/users' \
+3. curl --location 'http://better-mo.onrender.com/users' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "Jannet",
@@ -39,16 +39,16 @@ result: {"new_user_id":8}
     "phone": "4321"
 }'
 result: {"new_user_id":9}
-4. curl --location 'http://localhost:3000/groups' \
+4. curl --location 'http://better-mo.onrender.com/groups' \
 --header 'Content-Type: application/json' \
 --data '{
     "name": "Dunjons and Dwagons",
     "description": "Meets on Wednesdays"
 }'
 result: {"new_group_id":2}
-5. curl --location --request POST 'http://localhost:3000/groups/2/addUser/7'
+5. curl --location --request POST 'better-mo.onrender.com/groups/2/addUser/7'
 result: {"id":2}
-6. curl --location --request POST 'http://localhost:3000/groups/2/addUser/8'
+6. curl --location --request POST 'better-mo.onrender.com/groups/2/addUser/8'
 result: {"id":3}
-7. curl --location --request POST 'http://localhost:3000/groups/2/addUser/9'
+7. curl --location --request POST 'better-mo.onrender.com/groups/2/addUser/9'
 result: {"id":4}
