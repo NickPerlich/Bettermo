@@ -20,7 +20,12 @@ class User(BaseModel):
 def post_deliver_bottles(newuser: User):
 
     with db.engine.begin() as connection:
-        id = connection.execute(sqlalchemy.text("INSERT INTO users (name, email, phone) VALUES ("+newuser.name+", "+newuser.email+", "+newuser.phone+") RETURNING id")).scalar_one()
+        id = connection.execute(sqlalchemy.text("""INSERT INTO users (name, email, phone) 
+                                                VALUES (:name, :email, :phone) RETURNING id"""), {
+                                                    'name': newuser.name,
+                                                    'email': newuser.email,
+                                                    'phone': newuser.phone
+                                                }).scalar_one()
    
     return {'new_user_id': id}
 
