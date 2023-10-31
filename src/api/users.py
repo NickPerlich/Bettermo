@@ -6,8 +6,8 @@ from src import database as db
 from operator import itemgetter
 
 router = APIRouter(
-    prefix="/user",
-    tags=["user"],
+    prefix="/users",
+    tags=["users"],
     #dependencies=[Depends(auth.get_api_key)],
 )
 
@@ -16,7 +16,7 @@ class User(BaseModel):
     email: str
     phone: str
 
-@router.post("/create")
+@router.post("/")
 def post_deliver_bottles(newuser: User):
 
     with db.engine.begin() as connection:
