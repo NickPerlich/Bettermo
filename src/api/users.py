@@ -16,6 +16,10 @@ class User(BaseModel):
     email: str
     phone: str
 
+class Payment(BaseModel):
+    amount: float
+    description: str
+
 @router.post("/")
 def post_deliver_bottles(newuser: User):
 
@@ -56,4 +60,21 @@ def get_user_balance(user_id: int, other_user_id: int):
         ).scalar_one()
     return {"Balance": result}
 
+@router.post("/{uid1}/pay/{uid2}")
+def post_payment(uid1: int, uid2: int, payment: Payment):
+
+    with db.engine.begin() as connection:
+        id = connection.execute(sqlalchemy.text("""INSERT INTO transactions (from_user, to_user, value)
+                                                    VALUES (:user1, :user2, ROUND(:payment, 2))"""), {
+                                                    'user1': uid1,
+                                                    'user2': uid2,
+                                                    'payment': payment.amount
+                                                }).scalar_one()
+        connection.execute(sqlalchemy.text("""INSERT INTO settlements (description, transaction_id)
+                                                VALUES (:desc, :tid)"""), {
+                                                    'desc': payment.description,
+                                                    'tid': id
+                                                })
+        
+    return str(payment.amount)
 
