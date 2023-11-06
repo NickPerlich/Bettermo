@@ -88,7 +88,7 @@ def post_group_purchase(group_id: int, user_id: int, purchase: PurchaseInfo):
             {
                 'gid': group_id,
                 'uid': user_id,
-                'price': -purchase.price
+                'price': purchase.price
             }
         ).all()
 

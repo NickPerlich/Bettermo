@@ -65,7 +65,9 @@ def post_payment(uid1: int, uid2: int, payment: Payment):
 
     with db.engine.begin() as connection:
         id = connection.execute(sqlalchemy.text("""INSERT INTO transactions (from_user, to_user, value)
-                                                    VALUES (:user1, :user2, ROUND(:payment, 2))"""), {
+                                                    VALUES (:user1, :user2, ROUND(:payment, 2))
+                                                    RETURNING id
+                                                """), {
                                                     'user1': uid1,
                                                     'user2': uid2,
                                                     'payment': payment.amount
@@ -76,5 +78,5 @@ def post_payment(uid1: int, uid2: int, payment: Payment):
                                                     'tid': id
                                                 })
         
-    return str(payment.amount)
+    return {"Amount paid": payment.amount}
 
