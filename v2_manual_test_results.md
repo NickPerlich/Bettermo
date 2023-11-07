@@ -47,3 +47,73 @@ result: {"Balance": 18.23}
     "amount": 18.23
 }'
 result: "200 OK"
+
+
+## 3: Resolving Balance Example Flow
+### Background
+Jimmy and Jerry are roommates and Jimmy wants to pay back Jerry for dinner. Thus, Jimmy attempts to settle his debt with Jerry so that when Jerry checks who has attempted to settle debt he can accept or decline the settlement. 
+### User Goal
+Jimmy wants to attempt to settle his debt to Jerry. 
+
+### API Calls
+Roommate Group Id: 4
+Jimmy User Id: 1, Jerry User Id: 2
+Jimmy calls GET /users/2/balances/1 to get the Balance between him and Jerry.
+Jimmy pays Jerry on Venmo (sponsor us please).
+Jimmy calls POST /users/2/balances/1 to make an attempt to settle his debt with Jerry.
+
+
+# Testing results
+1. curl --location 'http://better-mo.onrender.com/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "Jimmy",
+    "email": "jimmy@gmail.com",
+    "phone": "11111"
+}'
+result: {"new_user_id":10}
+
+2. curl --location 'http://better-mo.onrender.com/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "Jerry",
+    "email": "jerry@gmail.com",
+    "phone": "222222"
+}'
+result: {"new_user_id":11}
+
+
+3. curl --location 'http://better-mo.onrender.com/groups'
+--header 'Content-Type: application/json'
+--data '{
+      "name": "JimmyJerryBFFS",
+       "description": "Friends 4ever <3"
+   }'
+result: {"new_group_id":3}
+
+4. curl --location --request POST 'better-mo.onrender.com/groups/3/addUser/10'
+result: {"id":5}
+
+5. curl --location --request POST 'better-mo.onrender.com/groups/3/addUser/11'
+result: {"id":6}
+
+6. curl -X POST --location 'http://better-mo.onrender.com/groups/3/user/10/purchases' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "description": "Dinner Jimmy Jerry",
+    "price": 28.00
+}'
+result: "200 OK"
+
+7. curl --location 'http://better-mo.onrender.com/users/4/balances/2' \
+--header 'Content-Type: application/json''
+result: {"Balance": -14.00}
+
+8. curl -X POST --location 'http://better-mo.onrender.com/users/10/balance/11' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "amount": 14.00
+}'
+result: "200 OK"
+
+
