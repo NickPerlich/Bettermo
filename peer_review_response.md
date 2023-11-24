@@ -36,6 +36,11 @@
 
 ## Keveh Ghalambor
 ### Accepted Responses
+- [ ] _You could add more error handling for api endpoints, more than just a boolean value
+_
+- [ ] Make the description for api payloads more descriptive
+- [ ] _Add default values to inputs_
+- [ ] _Be more consistent with how you name variables, some are named with camelBack, while others use underscores_
 
 ### Unaccepted Responses
 - _There seems to be a lot of tables that are not listed in your ER diagram_. An ER diagram is not supposed to be a 1 to 1 representation of the database. Our uploaded ER diagram should be effecient.
@@ -43,6 +48,7 @@
 - _add more endpoints for sanity checking, getting users, getting groups etc_. Ambiguous, but also heavily dealt with in Adam's feedback.
 - _There is no way to edit rows, which would definitely be helpful_. Ambiguous, not sure how to take this. (Which table?)
 - _Make an endpoint to delete a row to give you more control over your data_. The user has sufficient control over the data. Delete row's from which table? Also, an awfully powerful ability for a user to have.
+- _Based on your ER Diagram, you should try to add more columns to handle the amount of data that your app needs to handle_. Confusing statement. The ER diagram is a simplified version of what is going on. The number of columns is sufficient. We might be able to elaborate on users?
 
 ### Debated Responses
 - [ ] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
