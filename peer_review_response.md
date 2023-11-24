@@ -7,7 +7,7 @@
 - [ ] Change "/" in groups.py to "/create_group"
 - [ ] Change "/" in users.py to "/create_user"
 - [ ] Create GET "/{id}" in group.py to get a list of users in a group
-- [ ] Create DELETE "/{user_id}/{group_id}" in users.py to remove a user from a group
+- [ ] Create DELETE "/{user_id}/{group_id}" in users.py to remove a user from a group, perhaps also do this for groups.
 - [ ] Rename API Documentation in from 'Central Coast Cauldrons' to 'Better Mo'
 - [ ] Update API Spec to match API (do after all changes, or as you change, so it is up to date)
 ### Debated/Unaccepted Responses
@@ -36,8 +36,6 @@
 
 ## Keveh Ghalambor
 ### Accepted Responses
-- [ ] _You could add more error handling for api endpoints, more than just a boolean value
-_
 - [ ] Make the description for api payloads more descriptive
 - [ ] _Add default values to inputs_
 - [ ] _Be more consistent with how you name variables, some are named with camelBack, while others use underscores_
@@ -55,3 +53,26 @@ _
 
 ### Already Accepted Responses
  - The docs page says Central Coast Cauldrons
+ - 
+
+ ## Sebastian Thau
+ ### Accepted Responses
+- [ ] _For some of your endpoints you guys return a success boolean and for others an id. You may want to return both for all of them just to give more information._
+- [ ] Only success booleans are returned, consider adding status codes and error messages
+- [ ] Column Constraints - For columns like name, email, and phone, consider adding a max length or other constraints to ensure you are getting the data you want.
+- [ ] _Table Descriptions - descriptions for tables and columns can be helpful for understanding the purpose of each component_ 
+- [ ] _Update - add an endpoint to update groups or user information. This will be more RESTful_
+- [ ] 
+
+ ### Unaccepted Responses
+ - _You might want to add more columns to capture additional information. For example, you might want to include an amount column in your purchases table or additional details in the users_to_group table._ We understand this. Adding columns will add unnecessary complexity for the data we need to communicate, however. If we add more complex endpoints, we can explore this further for sure.
+ - _Data Types - Use varchar instead of text if there's a maximum length for the data._ Not a bad idea, but we don't really have a maximum text length for the description at the moment. The text type is also very performant in PostGres.
+
+ ### Already Accepted Responses
+- The explanations are a bit brief for certain endpoints.
+- Nullable - Consider making some columns not nullable as a user with no name, phone, or email isn't really a user.
+- Add Unique Constraints - Consider adding unique constraints to fields like email in the users table to ensure that there are no duplicate email addresses.
+- Delete- add an endpoint to delete groups or users. This will be more RESTful
+
+ ### Debated Responses
+ - _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity._
