@@ -41,7 +41,7 @@
 - [ ] _Be more consistent with how you name variables, some are named with camelBack, while others use underscores_
 
 ### Unaccepted Responses
-- _There seems to be a lot of tables that are not listed in your ER diagram_. An ER diagram is not supposed to be a 1 to 1 representation of the database. Our uploaded ER diagram should be effecient.
+- _There seems to be a lot of tables that are not listed in your ER diagram_. An ER diagram is not supposed to be a 1 to 1 representation of the database. Our uploaded ER diagram should be suffiecient.
 - _put descriptions for all of your endpoints to make it more readable_. Ambiguous, but also likely taken care of in previous responses.
 - _add more endpoints for sanity checking, getting users, getting groups etc_. Ambiguous, but also heavily dealt with in Adam's feedback.
 - _There is no way to edit rows, which would definitely be helpful_. Ambiguous, not sure how to take this. (Which table?)
