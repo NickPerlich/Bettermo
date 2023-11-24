@@ -66,11 +66,11 @@
  - _You might want to add more columns to capture additional information. For example, you might want to include an amount column in your purchases table or additional details in the users_to_group table._ We understand this. Adding columns will add unnecessary complexity for the data we need to communicate, however. If we add more complex endpoints, we can explore this further for sure.
  - _Data Types - Use varchar instead of text if there's a maximum length for the data._ Not a bad idea, but we don't really have a maximum text length for the description at the moment. The text type is also very performant in PostGres.
 
+ ### Debated Responses
+ - _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity._
+   
  ### Already Accepted Responses
 - The explanations are a bit brief for certain endpoints.
 - Nullable - Consider making some columns not nullable as a user with no name, phone, or email isn't really a user.
 - Add Unique Constraints - Consider adding unique constraints to fields like email in the users table to ensure that there are no duplicate email addresses.
 - Delete- add an endpoint to delete groups or users. This will be more RESTful
-
- ### Debated Responses
- - _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity._
