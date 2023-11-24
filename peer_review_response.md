@@ -10,7 +10,7 @@
 - [ ] Create DELETE "/{user_id}/{group_id}" in users.py to remove a user from a group, perhaps also do this for groups.
 - [ ] Rename API Documentation in from 'Central Coast Cauldrons' to 'Better Mo'
 - [ ] Update API Spec to match API (do after all changes, or as you change, so it is up to date)
-### Debated/Unaccepted Responses
+### Debated Responses
 - [ ] Create a table for storing the balances of users between each other
 - [ ] Create a unique identifier for each user and group, such as a username or group name that cannot already exist in the database
 
