@@ -53,7 +53,6 @@
 
 ### Already Accepted Responses
  - The docs page says Central Coast Cauldrons
- - 
 
  ## Sebastian Thau
  ### Accepted Responses
@@ -62,7 +61,6 @@
 - [ ] Column Constraints - For columns like name, email, and phone, consider adding a max length or other constraints to ensure you are getting the data you want.
 - [ ] _Table Descriptions - descriptions for tables and columns can be helpful for understanding the purpose of each component_ 
 - [ ] _Update - add an endpoint to update groups or user information. This will be more RESTful_
-- [ ] 
 
  ### Unaccepted Responses
  - _You might want to add more columns to capture additional information. For example, you might want to include an amount column in your purchases table or additional details in the users_to_group table._ We understand this. Adding columns will add unnecessary complexity for the data we need to communicate, however. If we add more complex endpoints, we can explore this further for sure.
