@@ -23,13 +23,29 @@
 - [ ] Could make schema in users table not accept null values, because a user with null name and etc. does not make sense.
 - [ ] _Using the service, I think it would be nice to have a functionality to have a way for all of my outstanding non-zero balances shown in a get._
 
+### Unaccepted Responses
+- _Make use of the other fields asked for in the /users endpoint, or get rid of it, makes it seem like extra unused information asked for._ While we understand this, for the completeness of the project, we are going to keep it. If we are simulating a full application, the extra fields help define the domain in which we are working.
+
+### Debated Responses
+- [ ] _Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction._ This is a little vague, but we should look into it, make sure it is behaving correctly.
+
 ### Already Addressed Responses
 - Removing a user from the group is not implemented like the API spec mentioned. You could implement it for that functionality.
 - Some endpoints are coded but not detailed and unsure what they do. Add them to the API spec description.
 - Add the other user specs into the API spec file, there is no detail on these.
 
+## Keveh Ghalambor
+### Accepted Responses
+
 ### Unaccepted Responses
-- _Make use of the other fields asked for in the /users endpoint, or get rid of it, makes it seem like extra unused information asked for._ While we understand this, for the completeness of the project, we are going to keep it. If we are simulating a full application, the extra fields help define the domain in which we are working.
+- _There seems to be a lot of tables that are not listed in your ER diagram_. An ER diagram is not supposed to be a 1 to 1 representation of the database. Our uploaded ER diagram should be effecient.
+- _put descriptions for all of your endpoints to make it more readable_. Ambiguous, but also likely taken care of in previous responses.
+- _add more endpoints for sanity checking, getting users, getting groups etc_. Ambiguous, but also heavily dealt with in Adam's feedback.
+- _There is no way to edit rows, which would definitely be helpful_. Ambiguous, not sure how to take this. (Which table?)
+- _Make an endpoint to delete a row to give you more control over your data_. The user has sufficient control over the data. Delete row's from which table? Also, an awfully powerful ability for a user to have.
 
 ### Debated Responses
-- [ ] Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction.
+- [ ] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
+
+### Already Accepted Responses
+ - The docs page says Central Coast Cauldrons
