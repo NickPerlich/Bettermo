@@ -12,8 +12,8 @@
 - [ ] Update API Spec to match API (do after all changes, or as you change, so it is up to date)
 
 ### Unaccepted Responses
-- Create a table for storing the balances of users between each other
-- Create a unique identifier for each user and group, such as a username or group name that cannot already exist in the database
+- _Create a table for storing the balances of users between each other_ We could create a view, however this is unnecessary.
+- _Create a unique identifier for each user and group, such as a username or group name that cannot already exist in the database._ Each group and user has a unique id.
 
 ## Ivan Nghi
 ### Accepted Resonpses
@@ -62,7 +62,7 @@
  ### Unaccepted Responses
  - _You might want to add more columns to capture additional information. For example, you might want to include an amount column in your purchases table or additional details in the users_to_group table._ We understand this. Adding columns will add unnecessary complexity for the data we need to communicate, however. If we add more complex endpoints, we can explore this further for sure.
  - _Data Types - Use varchar instead of text if there's a maximum length for the data._ Not a bad idea, but we don't really have a maximum text length for the description at the moment. The text type is also very performant in PostGres.
-- _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity.
+- _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity._ We believe that the names we currently have are good because the table groups contains multiple groups for example.
 
  ### Already Accepted Responses
 - The explanations are a bit brief for certain endpoints.
