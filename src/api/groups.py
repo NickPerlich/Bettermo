@@ -29,6 +29,7 @@ def post_deliver_bottles(newgroup: Group):
         ).scalar_one()
    
     return {'new_group_id': id}
+
 @router.post("/{group_id}/addUser/{user_id}")
 def post_deliver_bottles(group_id: int, user_id: int):
 
