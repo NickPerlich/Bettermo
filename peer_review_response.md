@@ -38,6 +38,7 @@
 - [ ] Make the description for api payloads more descriptive
 - [ ] _Add default values to inputs_
 - [ ] _Be more consistent with how you name variables, some are named with camelBack, while others use underscores_
+- [ ] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
 
 ### Unaccepted Responses
 - _There seems to be a lot of tables that are not listed in your ER diagram_. An ER diagram is not supposed to be a 1 to 1 representation of the database. Our uploaded ER diagram should be suffiecient.
@@ -46,9 +47,6 @@
 - _There is no way to edit rows, which would definitely be helpful_. Ambiguous, not sure how to take this. (Which table?)
 - _Make an endpoint to delete a row to give you more control over your data_. The user has sufficient control over the data. Delete row's from which table? Also, an awfully powerful ability for a user to have.
 - _Based on your ER Diagram, you should try to add more columns to handle the amount of data that your app needs to handle_. Confusing statement. The ER diagram is a simplified version of what is going on. The number of columns is sufficient. We might be able to elaborate on users?
-
-### Debated Responses
-- [ ] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
 
 ### Already Accepted Responses
  - The docs page says Central Coast Cauldrons
@@ -64,10 +62,8 @@
  ### Unaccepted Responses
  - _You might want to add more columns to capture additional information. For example, you might want to include an amount column in your purchases table or additional details in the users_to_group table._ We understand this. Adding columns will add unnecessary complexity for the data we need to communicate, however. If we add more complex endpoints, we can explore this further for sure.
  - _Data Types - Use varchar instead of text if there's a maximum length for the data._ Not a bad idea, but we don't really have a maximum text length for the description at the moment. The text type is also very performant in PostGres.
+- _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity.
 
- ### Debated Responses
- - _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity._
-   
  ### Already Accepted Responses
 - The explanations are a bit brief for certain endpoints.
 - Nullable - Consider making some columns not nullable as a user with no name, phone, or email isn't really a user.
