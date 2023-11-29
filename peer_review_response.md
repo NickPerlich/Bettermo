@@ -12,8 +12,8 @@
 - [ ] Update API Spec to match API (do after all changes, or as you change, so it is up to date)
 
 ### Unaccepted Responses
-- _Create a table for storing the balances of users between each other
-- _Create a unique identifier for each user and group, such as a username or group name that cannot already exist in the database
+- Create a table for storing the balances of users between each other
+- Create a unique identifier for each user and group, such as a username or group name that cannot already exist in the database
 
 ## Ivan Nghi
 ### Accepted Resonpses
