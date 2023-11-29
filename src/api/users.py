@@ -80,8 +80,6 @@ def post_payment(uid1: int, uid2: int, payment: Payment):
         
     return {"Amount paid": payment.amount}
 
-
-
 @router.get("/{user_id}/balancebreakdown")
 def get_balance_breakdown(user_id: int):
     with db.engine.begin() as connection:
@@ -123,27 +121,10 @@ def get_balance_breakdown(user_id: int):
         result = connection.execute(
             sqlalchemy.text(
                 '''
-                WITH outbound AS (
-                SELECT SUM(value) AS amount, to_user AS user_id
+                SELECT to_user AS user, SUM(value) AS amount
                 FROM transactions
                 WHERE from_user = 101
-                GROUP BY to_user
-                ),
-                inbound AS (
-                    SELECT SUM(value) AS amount, from_user AS user_id
-                    FROM transactions
-                    WHERE to_user = 101
-                    GROUP BY from_user
-                )
-                SELECT user_id, amount
-                FROM outbound
-                WHERE amount > 0
-5555
-                UNION
-
-                SELECT user_id, -amount AS amount
-                FROM inbound
-                WHERE amount < 0
+                GROUP BY user
                 '''
             ),
             {
