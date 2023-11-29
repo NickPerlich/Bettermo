@@ -23,12 +23,10 @@
 - [ ] _Update example flows to match spec_
 - [ ] Could make schema in users table not accept null values, because a user with null name and etc. does not make sense.
 - [ ] _Using the service, I think it would be nice to have a functionality to have a way for all of my outstanding non-zero balances shown in a get._
+- [ ] Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction._ This is a little vague, but we should look into it, make sure it is behaving correctly.
 
 ### Unaccepted Responses
 - _Make use of the other fields asked for in the /users endpoint, or get rid of it, makes it seem like extra unused information asked for._ While we understand this, for the completeness of the project, we are going to keep it. If we are simulating a full application, the extra fields help define the domain in which we are working.
-
-### Debated Responses
-- [ ] _Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction._ This is a little vague, but we should look into it, make sure it is behaving correctly.
 
 ### Already Addressed Responses
 - Removing a user from the group is not implemented like the API spec mentioned. You could implement it for that functionality.
