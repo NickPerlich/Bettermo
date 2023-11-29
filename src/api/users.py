@@ -114,5 +114,51 @@ def get_balance_breakdown(user_id: int):
             {
                 'uid1': user_id
             }
-        ).scalar_one()
+        ).fetchall()
     return {"Balance Breakdown": result}
+
+@router.post("/{user_id}/balancebreakdown")
+def get_balance_breakdown(user_id: int):
+    with db.engine.begin() as connection:
+        result = connection.execute(
+            sqlalchemy.text(
+                '''
+                WITH outbound AS (
+                SELECT SUM(value) AS amount, to_user AS user_id
+                FROM transactions
+                WHERE from_user = 101
+                GROUP BY to_user
+                ),
+                inbound AS (
+                    SELECT SUM(value) AS amount, from_user AS user_id
+                    FROM transactions
+                    WHERE to_user = 101
+                    GROUP BY from_user
+                )
+                SELECT user_id, amount
+                FROM outbound
+                WHERE amount > 0
+5555
+                UNION
+
+                SELECT user_id, -amount AS amount
+                FROM inbound
+                WHERE amount < 0
+                '''
+            ),
+            {
+                'uid1': user_id
+            }
+        ).fetchall()
+
+        for i in result:
+            id = connection.execute(sqlalchemy.text("""INSERT INTO transactions (from_user, to_user, value)
+                                                    VALUES (:user1, :user2, ROUND(:payment, 2))
+                                                    RETURNING id
+                                                """), {
+                                                    'user1': user_id,
+                                                    'user2': i[0],
+                                                    'payment': i[1]
+                                                }).scalar_one()
+
+    return {"All balances settled"}
