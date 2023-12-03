@@ -10,9 +10,10 @@
 - [ ] Create DELETE "/{user_id}/{group_id}" in users.py to remove a user from a group, perhaps also do this for groups.
 - [ ] Rename API Documentation in from 'Central Coast Cauldrons' to 'Better Mo'
 - [ ] Update API Spec to match API (do after all changes, or as you change, so it is up to date)
-### Debated Responses
-- [ ] Create a table for storing the balances of users between each other
-- [ ] Create a unique identifier for each user and group, such as a username or group name that cannot already exist in the database
+
+### Unaccepted Responses
+- _Create a table for storing the balances of users between each other_ We could create a view, however this is unnecessary.
+- _Create a unique identifier for each user and group, such as a username or group name that cannot already exist in the database._ Each group and user has a unique id.
 
 ## Ivan Nghi
 ### Accepted Resonpses
@@ -22,12 +23,10 @@
 - [ ] _Update example flows to match spec_
 - [ ] Could make schema in users table not accept null values, because a user with null name and etc. does not make sense.
 - [ ] _Using the service, I think it would be nice to have a functionality to have a way for all of my outstanding non-zero balances shown in a get._
+- [ ] Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction._ This is a little vague, but we should look into it, make sure it is behaving correctly.
 
 ### Unaccepted Responses
 - _Make use of the other fields asked for in the /users endpoint, or get rid of it, makes it seem like extra unused information asked for._ While we understand this, for the completeness of the project, we are going to keep it. If we are simulating a full application, the extra fields help define the domain in which we are working.
-
-### Debated Responses
-- [ ] _Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction._ This is a little vague, but we should look into it, make sure it is behaving correctly.
 
 ### Already Addressed Responses
 - Removing a user from the group is not implemented like the API spec mentioned. You could implement it for that functionality.
@@ -39,6 +38,7 @@
 - [ ] Make the description for api payloads more descriptive
 - [ ] _Add default values to inputs_
 - [ ] _Be more consistent with how you name variables, some are named with camelBack, while others use underscores_
+- [ ] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
 
 ### Unaccepted Responses
 - _There seems to be a lot of tables that are not listed in your ER diagram_. An ER diagram is not supposed to be a 1 to 1 representation of the database. Our uploaded ER diagram should be suffiecient.
@@ -47,9 +47,6 @@
 - _There is no way to edit rows, which would definitely be helpful_. Ambiguous, not sure how to take this. (Which table?)
 - _Make an endpoint to delete a row to give you more control over your data_. The user has sufficient control over the data. Delete row's from which table? Also, an awfully powerful ability for a user to have.
 - _Based on your ER Diagram, you should try to add more columns to handle the amount of data that your app needs to handle_. Confusing statement. The ER diagram is a simplified version of what is going on. The number of columns is sufficient. We might be able to elaborate on users?
-
-### Debated Responses
-- [ ] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
 
 ### Already Accepted Responses
  - The docs page says Central Coast Cauldrons
@@ -65,10 +62,8 @@
  ### Unaccepted Responses
  - _You might want to add more columns to capture additional information. For example, you might want to include an amount column in your purchases table or additional details in the users_to_group table._ We understand this. Adding columns will add unnecessary complexity for the data we need to communicate, however. If we add more complex endpoints, we can explore this further for sure.
  - _Data Types - Use varchar instead of text if there's a maximum length for the data._ Not a bad idea, but we don't really have a maximum text length for the description at the moment. The text type is also very performant in PostGres.
+- _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity._ We believe that the names we currently have are good because the table groups contains multiple groups for example.
 
- ### Debated Responses
- - _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity._
-   
  ### Already Accepted Responses
 - The explanations are a bit brief for certain endpoints.
 - Nullable - Consider making some columns not nullable as a user with no name, phone, or email isn't really a user.

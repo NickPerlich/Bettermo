@@ -150,3 +150,31 @@ Adds a transaction between user1 and user2, modifying their current balance.
     "amount": "integer" /* the balance change to be posted, in cents */
 }
 ```
+
+### 3.4. Show Balance Breakdown - `/{user_id}/balancebreakdown` (GET)
+
+Returns a table of every user to whom user_id owes money to or is owed by.
+
+**Returns**:
+```json
+{
+    "Balance Breakdown": [
+                            ['user_id', amount],
+                            ['user_id', amount],
+                            ['user_id', amount],
+                            ...
+                         ]  
+}
+```
+
+### 3.5. Resolve all Debts - `/{user_id}/balancebreakdown` (POST)
+
+Searches all users that user_id owns money to and resolves them.
+
+**Returns**:
+
+```json
+{
+    "OK"
+}
+```
