@@ -45,13 +45,19 @@ def spam_users_in_group(n, groups, users):
 
     return res
 
-def spam_transactions(n, groups, users, users_per_groups):
+def spam_transactions(n, users_per_groups):
     
-    for i in range(20):
-        price = random.randint(10, 400)
-        print(price)
+    descriptions = ['Groceries', 'Furniture', 'Airbnb', 'Thingymabob', 'Rent', 'Plumber']
 
+    transactions = []
 
+    for i in range(n):
+        price = random.randint(10, 1000)
+        index = random.randint(0, len(users_per_groups)-1)
+        description = descriptions[random.randint(0, len(descriptions)-1)]
+        transactions.append(users_per_groups[index][1], users_per_groups[index][0], description, price)
+
+    return transactions
 
 
 
@@ -61,6 +67,6 @@ groups = spam_groups(50000, users)
 
 users_per_groups = spam_users_in_group(250000, groups, users)
 
-transactions = spam_transactions(600000, groups, users, users_per_groups)
+transactions = spam_transactions(600000, users_per_groups)
 
 print()
