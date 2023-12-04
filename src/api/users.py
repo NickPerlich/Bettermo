@@ -21,7 +21,7 @@ class Payment(BaseModel):
     description: str
 
 @router.post("/")
-def post_deliver_bottles(newuser: User):
+def post_register_user(newuser: User):
 
     with db.engine.begin() as connection:
         id = connection.execute(sqlalchemy.text("""INSERT INTO users (name, email, phone) 

@@ -16,7 +16,7 @@ class Group(BaseModel):
     description: str
 
 @router.post("/")
-def post_deliver_bottles(newgroup: Group):
+def post_create_group(newgroup: Group):
 
     with db.engine.begin() as connection:
         id = connection.execute(
@@ -31,7 +31,7 @@ def post_deliver_bottles(newgroup: Group):
     return {'new_group_id': id}
 
 @router.post("/{group_id}/addUser/{user_id}")
-def post_deliver_bottles(group_id: int, user_id: int):
+def post_add_user_to_group(group_id: int, user_id: int):
 
     with db.engine.begin() as connection:
         id = connection.execute(
@@ -81,7 +81,7 @@ def post_group_purchase(group_id: int, user_id: int, purchase: PurchaseInfo):
                 )
                 INSERT INTO transactions
                 (from_user, to_user, value)
-                SELECT :uid, groupmates.user_id, ROUND(:price / total_groupmates.total,2)
+                SELECT :uid, groupmates.user_id, ROUND(:price / (total_groupmates.total+1),2)
                 FROM groupmates CROSS JOIN total_groupmates
                 RETURNING id
                 '''
