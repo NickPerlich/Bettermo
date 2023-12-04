@@ -42,7 +42,7 @@ def get_group(group_id: int):
                                 order by user_id'''), {
                                     'gid': group_id
                                 }
-            ).all
+            ).all()
         users = []
         for row in result:
             users.append({
