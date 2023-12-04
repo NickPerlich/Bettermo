@@ -22,7 +22,6 @@ class Payment(BaseModel):
 
 @router.post("/create_user")
 def create_user(newuser: User):
-
     with db.engine.begin() as connection:
         id = connection.execute(sqlalchemy.text("""INSERT INTO users (name, email, phone) 
                                                 VALUES (:name, :email, :phone) RETURNING id"""), {

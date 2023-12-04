@@ -18,7 +18,6 @@ class Group(BaseModel):
 
 @router.post("/create_group")
 def create_group(newgroup: Group):
-
     with db.engine.begin() as connection:
         id = connection.execute(
             sqlalchemy.text('''INSERT INTO groups (name, description)
@@ -41,9 +40,19 @@ def get_group(group_id: int):
                                 join users on user_id = users.id
                                 where group_id = :gid
                                 order by user_id'''), {
-
+                                    'gid': group_id
                                 }
-            )
+            ).all
+        users = []
+        for row in result:
+            users.append({
+                'user_id': row.user_id,
+                'name': row.name,
+                'email': row.email,
+                'phone': row.phone
+            })
+        return users
+    
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
 
