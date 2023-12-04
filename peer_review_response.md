@@ -17,7 +17,7 @@
 
 ## Ivan Nghi
 ### Accepted Resonpses
-- [ ] Change FastAPI Setup to not say 'Central Coast Cauldrons' but Bettermo
+- [done] Change FastAPI Setup to not say 'Central Coast Cauldrons' but Bettermo
 - [ ] _Add API Key_ (Will add if we have time, not the top priority)
 - [ ] Make API Descriptions in Spec more specific (again do this after all other changes)
 - [ ] _Update example flows to match spec_
