@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import sqlalchemy
 from src import database as db
 from operator import itemgetter
+from sqlalchemy.exc import DBAPIError
 
 router = APIRouter(
     prefix="/groups",
@@ -15,8 +16,8 @@ class Group(BaseModel):
     name: str
     description: str
 
-@router.post("/")
-def post_create_group(newgroup: Group):
+@router.post("/create_group")
+def create_group(newgroup: Group):
 
     with db.engine.begin() as connection:
         id = connection.execute(
@@ -29,6 +30,22 @@ def post_create_group(newgroup: Group):
         ).scalar_one()
    
     return {'new_group_id': id}
+
+@router.get("/{group_id}")
+def get_group(group_id: int):
+    try:
+        with db.engine.begin() as connection:
+            result = connection.execute(
+                sqlalchemy.text('''select user_id, name, email, phone
+                                from users_to_group
+                                join users on user_id = users.id
+                                where group_id = :gid
+                                order by user_id'''), {
+
+                                }
+            )
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
 
 @router.post("/{group_id}/addUser/{user_id}")
 def post_add_user_to_group(group_id: int, user_id: int):

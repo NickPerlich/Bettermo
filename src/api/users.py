@@ -20,8 +20,8 @@ class Payment(BaseModel):
     amount: float
     description: str
 
-@router.post("/")
-def post_register_user(newuser: User):
+@router.post("/create_user")
+def create_user(newuser: User):
 
     with db.engine.begin() as connection:
         id = connection.execute(sqlalchemy.text("""INSERT INTO users (name, email, phone) 
