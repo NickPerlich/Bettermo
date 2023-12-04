@@ -2,10 +2,7 @@
 
 ## 1. User Creation
 
-The API calls are made in this sequence when making a user account:
-1. `Make User`
-
-### 1.1. New User - `/users/` (POST)
+### 1.1. New User - `/users/create_user` (POST)
 
 Creates a new user account with specified information.
 
@@ -23,18 +20,12 @@ Creates a new user account with specified information.
 
 ```json
 {
-    "user_id": "string" /* This id will be used for future calls */
+    "new_user_id": "string" /* This id will be used for future calls */
 }
 ```
 ## 2. Group Creation
 
-The API calls can be made when making and viewing a group:
-1. `Make Group`
-2. `Add User`, or
-3. `Remove User`
-4. `Get Members`
-
-### 2.1. New Group - `/groups/` (POST)
+### 2.1. New Group - `/groups/create_group` (POST)
 
 Creates a new group with specified information.
 
@@ -43,6 +34,7 @@ Creates a new group with specified information.
 ```json
 {
   "name": "string"
+  "description": "string"
 }
 ```
 
@@ -50,43 +42,38 @@ Creates a new group with specified information.
 
 ```json
 {
-    "group_id": "string" /* This id will be used for future calls */
+    "new_group_id": "string" /* This id will be used for future calls */
 }
 ``` 
 
-### 2.2. Add User to Group - `/groups/{group_id}/users/` (POST)
+### 2.2. Add User to Group - `/groups/{group_id}/addUser/{user_id}` (POST)
 
-Adds the requested user to the specified group 
-
-**Request**:
-
-```json
-{
-  "user_id": "string"
-}
-```
+Adds the specified user to the specified group 
 
 **Returns**:
 
 ```json
 {
-    "success": "boolean"
+    "id": "int"
 }
 ```
 
 ### 2.3 Remove User - `/groups/{group_id}/users/{user_id}` (DELETE)
 
-Removes the specified user from the group, failing if they are not paid up.
+Removes the specified user from the group
 
 **Returns**:
 
 ```json
 {
-    "success": "boolean"
+    'deleted_user_id': "int"
+    'name': "string",
+    'email': "string",
+    'phone': "string"
 }
 ```
 
-### 2.4 Get Members - `/groups/{group_id}/users/` (GET)
+### 2.4 Get Members - `/groups/{group_id}` (GET)
 
 Lists all users in the specified group.
 
@@ -95,9 +82,12 @@ Lists all users in the specified group.
 ```json
 [
   {
-      "name": "string",
-      "user_id": "string"
-  }
+    'user_id': "int"
+    'name': "string",
+    'email': "string",
+    'phone': "string"
+  },
+  ...
 ]
 ```
 
@@ -108,7 +98,7 @@ These API calls are used to post group purchases and solve outstanding balances:
 2. `Get Balance`
 3. `Resolve Balance`
 
-### 3.1. Post Purchase - `/groups/{group_id}/purchases/{user_id}` (POST)
+### 3.1. Post Purchase - `/{group_id}/users/{user_id}/purchases` (POST)
 
 Posts a purchase to a group, added the split cost to the balance between this user and all others in the group.
 
@@ -116,7 +106,8 @@ Posts a purchase to a group, added the split cost to the balance between this us
 
 ```json
 {
-    "price": "integer" /* price in cents */
+    "description": "string",
+    "price": "float" /* price in dollars */
 }
 ```
 
@@ -124,22 +115,22 @@ Posts a purchase to a group, added the split cost to the balance between this us
 
 ```json
 {
-    "success": "boolean"
+    "ok"
 }
 ```
 
-### 3.2. Get Balance - `/users/{user_id1}/balances/{user_id2}` (GET)
+### 3.2. Get Balance - `/users/{user_id}/balances/{other_user_id}` (GET)
 
 Recieves the outstanding balance between user1 and user2, including balance from all group purchases since last resolution in all shared groups.
 
 **Returns**:
 ```json
 {
-    "balance": "integer" /* in cents */
+    "balance": "integer" /* in dollars */
 }
 ```
 
-### 3.3. Resolve Balance - `/users/{user_id1}/balances/{user_id2}` (POST)
+### 3.3. Resolve Balance - `/users/{uid1}/pay/{uid2}` (POST)
 
 Adds a transaction between user1 and user2, modifying their current balance.
 
@@ -147,11 +138,19 @@ Adds a transaction between user1 and user2, modifying their current balance.
 
 ```json
 {
-    "amount": "integer" /* the balance change to be posted, in cents */
+    "amount": "integer", /* the balance change to be posted, in dollars */
+    "description": "string"
+}
+```
+**Returns**:
+
+```json
+{
+    "Amount paid": "float"
 }
 ```
 
-### 3.4. Show Balance Breakdown - `/{user_id}/balancebreakdown` (GET)
+### 3.4. Show Balance Breakdown - `/{user_id}/balance_breakdown` (GET)
 
 Returns a table of every user to whom user_id owes money to or is owed by.
 
@@ -167,7 +166,7 @@ Returns a table of every user to whom user_id owes money to or is owed by.
 }
 ```
 
-### 3.5. Resolve all Debts - `/{user_id}/balancebreakdown` (POST)
+### 3.5. Resolve all Debts - `/{user_id}/resolve_balance` (POST)
 
 Searches all users that user_id owns money to and resolves them.
 
@@ -175,6 +174,6 @@ Searches all users that user_id owns money to and resolves them.
 
 ```json
 {
-    "OK"
+    "All balances settled"
 }
 ```
