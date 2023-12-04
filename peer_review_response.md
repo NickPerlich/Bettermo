@@ -1,11 +1,11 @@
 # Schema/API Design Response
 ## AdamDelRio
 ### Accepted Resonpses
-- [ ] Make ‘user-id’ in ‘users-to-group’ a foreign key.
-- [ ] Make ‘group-id’ in ‘users-to-group’ a foreign key.
-- [ ] Make ‘user-id’ Non-Nullable 
-- [ ] Change "/" in groups.py to "/create_group"
-- [ ] Change "/" in users.py to "/create_user"
+- [done] Make ‘user-id’ in ‘users-to-group’ a foreign key.
+- [done] Make ‘group-id’ in ‘users-to-group’ a foreign key.
+- [done] Make ‘user-id’ Non-Nullable 
+- [done] Change "/" in groups.py to "/create_group"
+- [done] Change "/" in users.py to "/create_user"
 - [ ] Create GET "/{id}" in group.py to get a list of users in a group
 - [ ] Create DELETE "/{user_id}/{group_id}" in users.py to remove a user from a group, perhaps also do this for groups.
 - [ ] Rename API Documentation in from 'Central Coast Cauldrons' to 'Better Mo'

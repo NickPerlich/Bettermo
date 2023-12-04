@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import sqlalchemy
 from src import database as db
 from operator import itemgetter
+from sqlalchemy.exc import DBAPIError
 
 router = APIRouter(
     prefix="/groups",
@@ -15,9 +16,8 @@ class Group(BaseModel):
     name: str
     description: str
 
-@router.post("/")
-def post_deliver_bottles(newgroup: Group):
-
+@router.post("/create_group")
+def create_group(newgroup: Group):
     with db.engine.begin() as connection:
         id = connection.execute(
             sqlalchemy.text('''INSERT INTO groups (name, description)
@@ -30,8 +30,34 @@ def post_deliver_bottles(newgroup: Group):
    
     return {'new_group_id': id}
 
+@router.get("/{group_id}")
+def get_group(group_id: int):
+    try:
+        with db.engine.begin() as connection:
+            result = connection.execute(
+                sqlalchemy.text('''select user_id, name, email, phone
+                                from users_to_group
+                                join users on user_id = users.id
+                                where group_id = :gid
+                                order by user_id'''), {
+                                    'gid': group_id
+                                }
+            ).all()
+        users = []
+        for row in result:
+            users.append({
+                'user_id': row.user_id,
+                'name': row.name,
+                'email': row.email,
+                'phone': row.phone
+            })
+        return users
+    
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
+
 @router.post("/{group_id}/addUser/{user_id}")
-def post_deliver_bottles(group_id: int, user_id: int):
+def post_add_user_to_group(group_id: int, user_id: int):
 
     with db.engine.begin() as connection:
         id = connection.execute(
@@ -81,7 +107,7 @@ def post_group_purchase(group_id: int, user_id: int, purchase: PurchaseInfo):
                 )
                 INSERT INTO transactions
                 (from_user, to_user, value)
-                SELECT :uid, groupmates.user_id, ROUND(:price / total_groupmates.total,2)
+                SELECT :uid, groupmates.user_id, ROUND(:price / (total_groupmates.total+1),2)
                 FROM groupmates CROSS JOIN total_groupmates
                 RETURNING id
                 '''
