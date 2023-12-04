@@ -6,9 +6,9 @@
 - [done] Make ‘user-id’ Non-Nullable 
 - [done] Change "/" in groups.py to "/create_group"
 - [done] Change "/" in users.py to "/create_user"
-- [ ] Create GET "/{id}" in group.py to get a list of users in a group
-- [ ] Create DELETE "/{user_id}/{group_id}" in users.py to remove a user from a group, perhaps also do this for groups.
-- [ ] Rename API Documentation in from 'Central Coast Cauldrons' to 'Better Mo'
+- [done] Create GET "/{id}" in group.py to get a list of users in a group
+- [done] Create DELETE "/{user_id}/{group_id}" in users.py to remove a user from a group, perhaps also do this for groups.
+- [done] Rename API Documentation in from 'Central Coast Cauldrons' to 'Better Mo'
 - [ ] Update API Spec to match API (do after all changes, or as you change, so it is up to date)
 
 ### Unaccepted Responses
