@@ -3,21 +3,33 @@
 
 ### PUT /{user_id}/update_user
 Run 1: 0.427 ms
+
 Run 2: 0.479 ms
+
 Run 3: 0.479 ms
+
 Avg: __0.461__ ms
+
 
 ### POST /create_user
 Run 1: 0.491 ms
+
 Run 2: 0.505 ms
+
 Run 3: 0.502 ms
+
 Avg: __ __ ms
+
 
 ### GET /users/{user_id}/balances/{other_user_id}
 Run 1: 113.153 ms
+
 Run 2: 110.575 ms
+
 Run 3: 111.299 ms
+
 Avg: __0.499__ ms
+
 
 ### POST /users/{user_id}/pay/{other_user_id}
 Run 1: 1.728 ms
