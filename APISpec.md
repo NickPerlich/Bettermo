@@ -23,6 +23,27 @@ Creates a new user given a name, phone number, and email.
     "new_user_id": "string" /* This id will be used for future calls */
 }
 ```
+### 1.2. Update User - `/users/{user_id}/update_user` (PUT)
+
+Update an existing user given a name, phone number, and email.
+
+**Request**:
+
+```json
+{
+  "name": "string",
+  "email": "string",
+  "phone": "string"
+}
+```
+
+**Returns**:
+
+```json
+{
+   "OK"
+}
+```
 ## 2. Group Creation
 
 ### 2.1. New Group - `/groups/create_group` (POST)
@@ -89,7 +110,26 @@ Lists all users in the group with gid group_id.
   ...
 ]
 ```
+### 2.5. Update Group - `group/{group_id}/update_group` (PUT)
 
+Update an existing group given a name and description.
+
+**Request**:
+
+```json
+{
+  "name": "string",
+  "description": "string"
+}
+```
+
+**Returns**:
+
+```json
+{
+   "OK"
+}
+```
 ## 3. Purchases and Balancing
 
 ### 3.1. Post Purchase - `/{group_id}/users/{user_id}/purchases` (POST)
@@ -160,14 +200,3 @@ Returns a table of every user to whom user_id owes money to or is owed by.
 }
 ```
 
-### 3.5. Resolve Group Balance - `/{user_id}/resolve_balance` (POST)
-
-Searches all users that user_id owes money to and resolves them.
-
-**Returns**:
-
-```json
-{
-    "All balances settled"
-}
-```
