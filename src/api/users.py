@@ -114,8 +114,8 @@ def get_balance_breakdown(user_id: int):
         ).fetchall()
     return {"Balance Breakdown": result}
 
-@router.post("/{user_id}/balance_breakdown")
-def get_balance_breakdown(user_id: int):
+@router.post("/{user_id}/resolve_balance")
+def post_resolve_balance(user_id: int):
     with db.engine.begin() as connection:
         result = connection.execute(
             sqlalchemy.text(
