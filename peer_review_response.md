@@ -9,7 +9,7 @@
 - [done] Create GET "/{id}" in group.py to get a list of users in a group
 - [done] Create DELETE "/{user_id}/{group_id}" in users.py to remove a user from a group, perhaps also do this for groups.
 - [done] Rename API Documentation in from 'Central Coast Cauldrons' to 'Better Mo'
-- [ ] Update API Spec to match API (do after all changes, or as you change, so it is up to date)
+- [done] Update API Spec to match API (do after all changes, or as you change, so it is up to date)
 
 ### Unaccepted Responses
 - _Create a table for storing the balances of users between each other_ We could create a view, however this is unnecessary.
