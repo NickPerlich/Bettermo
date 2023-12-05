@@ -18,17 +18,20 @@ class Group(BaseModel):
 
 @router.post("/create_group")
 def create_group(new_group: Group):
-    with db.engine.begin() as connection:
-        id = connection.execute(
-            sqlalchemy.text('''INSERT INTO groups (name, description)
-                            VALUES (:g_name, :descript) RETURNING id'''),
-            {
-                'g_name': new_group.name,
-                'descript': new_group.description
-            }
-        ).scalar_one()
-   
-    return {'new_group_id': id}
+    try:
+        with db.engine.begin() as connection:
+            id = connection.execute(
+                sqlalchemy.text('''INSERT INTO groups (name, description)
+                                VALUES (:g_name, :descript) RETURNING id'''),
+                {
+                    'g_name': new_group.name,
+                    'descript': new_group.description
+                }
+            ).scalar_one()
+    
+        return {'new_group_id': id}
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
 
 @router.get("/{group_id}")
 def get_group(group_id: int):
@@ -86,20 +89,22 @@ def delete_user_from_group(group_id: int, user_id: int):
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
 
-@router.post("/{group_id}/addUser/{user_id}")
+@router.post("/{group_id}/users/{user_id}")
 def post_add_user_to_group(group_id: int, user_id: int):
-
-    with db.engine.begin() as connection:
-        id = connection.execute(
-            sqlalchemy.text('''INSERT INTO users_to_group (user_id, group_id)
-                            VALUES (:uid, :gid) RETURNING id'''),
-            {
-                'uid': user_id,
-                'gid': group_id 
-            }
-        ).scalar_one()
-   
-    return {'id': id}
+    try:
+        with db.engine.begin() as connection:
+            id = connection.execute(
+                sqlalchemy.text('''INSERT INTO users_to_group (user_id, group_id)
+                                VALUES (:uid, :gid) RETURNING id'''),
+                {
+                    'uid': user_id,
+                    'gid': group_id 
+                }
+            ).scalar_one()
+    
+        return {'id': id}
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
 
 class PurchaseInfo(BaseModel):
     description: str
@@ -107,64 +112,66 @@ class PurchaseInfo(BaseModel):
 
 @router.post("/{group_id}/users/{user_id}/purchases")
 def post_group_purchase(group_id: int, user_id: int, purchase: PurchaseInfo):
+    try:
+        with db.engine.begin() as connection:
+            #create purchase
+            purchase_id = connection.execute(
+                sqlalchemy.text('''INSERT into purchases (group_id, buyer, description, price)
+                                VALUES (:gid, :uid, :description, :price)
+                                RETURNING id'''),
+                {
+                    'gid': group_id,
+                    'uid': user_id,
+                    'description': purchase.description,
+                    'price': purchase.price
+                }
+            ).scalar_one()
 
-    with db.engine.begin() as connection:
-        #create purchase
-        purchase_id = connection.execute(
-            sqlalchemy.text('''INSERT into purchases (group_id, buyer, description, price)
-                            VALUES (:gid, :uid, :description, :price)
-                            RETURNING id'''),
-            {
-                'gid': group_id,
-                'uid': user_id,
-                'description': purchase.description,
-                'price': purchase.price
-            }
-        ).scalar_one()
-
-        #create transactions
-        transaction_ids = connection.execute(
-            sqlalchemy.text(
-                '''
-                WITH groupmates as (
-                    SELECT DISTINCT user_id
-                    FROM users_to_group
-                    WHERE group_id = :gid AND NOT user_id = :uid
-                ),
-                total_groupmates as (
-                    SELECT COUNT(*) as total
-                    FROM groupmates
-                )
-                INSERT INTO transactions
-                (from_user, to_user, value)
-                SELECT :uid, groupmates.user_id, ROUND(:price / (total_groupmates.total+1),2)
-                FROM groupmates CROSS JOIN total_groupmates
-                RETURNING id
-                '''
-            ),
-            {
-                'gid': group_id,
-                'uid': user_id,
-                'price': purchase.price
-            }
-        ).all()
-
-        transaction_ids = [id.id for id in transaction_ids]
-
-        #create purchase_transactions
-        for id in transaction_ids:
-            connection.execute(
+            #create transactions
+            transaction_ids = connection.execute(
                 sqlalchemy.text(
                     '''
-                    INSERT INTO purchase_transactions
-                    (purchase_id, transaction_id)
-                    VALUES
-                    (:pid, :tid)
+                    WITH groupmates as (
+                        SELECT DISTINCT user_id
+                        FROM users_to_group
+                        WHERE group_id = :gid AND NOT user_id = :uid
+                    ),
+                    total_groupmates as (
+                        SELECT COUNT(*) as total
+                        FROM groupmates
+                    )
+                    INSERT INTO transactions
+                    (from_user, to_user, value)
+                    SELECT :uid, groupmates.user_id, ROUND(:price / (total_groupmates.total+1),2)
+                    FROM groupmates CROSS JOIN total_groupmates
+                    RETURNING id
                     '''
                 ),
                 {
-                    'pid': purchase_id,
-                    'tid': id
+                    'gid': group_id,
+                    'uid': user_id,
+                    'price': purchase.price
                 }
-            )
-    return "OK"
+            ).all()
+
+            transaction_ids = [id.id for id in transaction_ids]
+
+            #create purchase_transactions
+            for id in transaction_ids:
+                connection.execute(
+                    sqlalchemy.text(
+                        '''
+                        INSERT INTO purchase_transactions
+                        (purchase_id, transaction_id)
+                        VALUES
+                        (:pid, :tid)
+                        '''
+                    ),
+                    {
+                        'pid': purchase_id,
+                        'tid': id
+                    }
+                )
+        return "OK"
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
