@@ -22,7 +22,7 @@
 - [done] Make API Descriptions in Spec more specific (again do this after all other changes)
 - [ ] _Update example flows to match spec_
 - [done] Could make schema in users table not accept null values, because a user with null name and etc. does not make sense.
-- [ ] _Using the service, I think it would be nice to have a functionality to have a way for all of my outstanding non-zero balances shown in a get._
+- [done] _Using the service, I think it would be nice to have a functionality to have a way for all of my outstanding non-zero balances shown in a get._
 - [ ] Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction._ This is a little vague, but we should look into it, make sure it is behaving correctly.
 
 ### Unaccepted Responses
@@ -35,7 +35,7 @@
 
 ## Keveh Ghalambor
 ### Accepted Responses
-- [ ] Make the description for api payloads more descriptive
+- [done] Make the description for api payloads more descriptive
 - [ ] _Add default values to inputs_
 - [ ] _Be more consistent with how you name variables, some are named with camelBack, while others use underscores_
 - [ ] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
