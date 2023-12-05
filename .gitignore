@@ -1,2 +1,5 @@
 /.env
 /src/.env
+/src/__pycache__
+/src/api/__pycache__
+/__pycache__
