@@ -92,11 +92,6 @@ Lists all users in the group with gid group_id.
 
 ## 3. Purchases and Balancing
 
-These API calls are used to post group purchases and solve outstanding balances:
-1. `Post Purchase`
-2. `Get Balance`
-3. `Resolve Balance`
-
 ### 3.1. Post Purchase - `/{group_id}/users/{user_id}/purchases` (POST)
 
 Posts a purchase to a group, added the split cost to the balance between this user and all others in the group.
@@ -129,7 +124,7 @@ Recieves the outstanding balance between user1 and user2, including balance from
 }
 ```
 
-### 3.3. Resolve Balance - `/users/{uid1}/pay/{uid2}` (POST)
+### 3.3. Resolve Individual Balance - `/users/{user_id}/pay/{other_user_id}` (POST)
 
 Adds a transaction between user1 and user2, modifying their current balance. This represents user1 paying user2.
 
@@ -165,7 +160,7 @@ Returns a table of every user to whom user_id owes money to or is owed by.
 }
 ```
 
-### 3.5. Resolve all Debts - `/{user_id}/resolve_balance` (POST)
+### 3.5. Resolve Group Balance - `/{user_id}/resolve_balance` (POST)
 
 Searches all users that user_id owes money to and resolves them.
 
