@@ -200,14 +200,3 @@ Returns a table of every user to whom user_id owes money to or is owed by.
 }
 ```
 
-### 3.5. Resolve Group Balance - `/{user_id}/resolve_balance` (POST)
-
-Searches all users that user_id owes money to and resolves them.
-
-**Returns**:
-
-```json
-{
-    "All balances settled"
-}
-```
