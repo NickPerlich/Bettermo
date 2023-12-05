@@ -17,14 +17,14 @@ class Group(BaseModel):
     description: str
 
 @router.post("/create_group")
-def create_group(newgroup: Group):
+def create_group(new_group: Group):
     with db.engine.begin() as connection:
         id = connection.execute(
             sqlalchemy.text('''INSERT INTO groups (name, description)
                             VALUES (:g_name, :descript) RETURNING id'''),
             {
-                'g_name': newgroup.name,
-                'descript': newgroup.description
+                'g_name': new_group.name,
+                'descript': new_group.description
             }
         ).scalar_one()
    

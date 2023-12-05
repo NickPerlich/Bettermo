@@ -21,13 +21,13 @@ class Payment(BaseModel):
     description: str
 
 @router.post("/create_user")
-def create_user(newuser: User):
+def create_user(new_user: User):
     with db.engine.begin() as connection:
         id = connection.execute(sqlalchemy.text("""INSERT INTO users (name, email, phone) 
                                                 VALUES (:name, :email, :phone) RETURNING id"""), {
-                                                    'name': newuser.name,
-                                                    'email': newuser.email,
-                                                    'phone': newuser.phone
+                                                    'name': new_user.name,
+                                                    'email': new_user.email,
+                                                    'phone': new_user.phone
                                                 }).scalar_one()
    
     return {'new_user_id': id}
@@ -59,16 +59,16 @@ def get_user_balance(user_id: int, other_user_id: int):
         ).scalar_one()
     return {"Balance": result}
 
-@router.post("/{uid1}/pay/{uid2}")
-def post_payment(uid1: int, uid2: int, payment: Payment):
+@router.post("/{user_id}/pay/{other_user_id}")
+def post_payment(user_id: int, other_user_id: int, payment: Payment):
 
     with db.engine.begin() as connection:
         id = connection.execute(sqlalchemy.text("""INSERT INTO transactions (from_user, to_user, value)
                                                     VALUES (:user1, :user2, ROUND(:payment, 2))
                                                     RETURNING id
                                                 """), {
-                                                    'user1': uid1,
-                                                    'user2': uid2,
+                                                    'user1': user_id,
+                                                    'user2': other_user_id,
                                                     'payment': payment.amount
                                                 }).scalar_one()
         connection.execute(sqlalchemy.text("""INSERT INTO settlements (description, transaction_id)
@@ -79,7 +79,7 @@ def post_payment(uid1: int, uid2: int, payment: Payment):
         
     return {"Amount paid": payment.amount}
 
-@router.get("/{user_id}/balancebreakdown")
+@router.get("/{user_id}/balance_breakdown")
 def get_balance_breakdown(user_id: int):
     with db.engine.begin() as connection:
         result = connection.execute(
@@ -114,7 +114,7 @@ def get_balance_breakdown(user_id: int):
         ).fetchall()
     return {"Balance Breakdown": result}
 
-@router.post("/{user_id}/balancebreakdown")
+@router.post("/{user_id}/balance_breakdown")
 def get_balance_breakdown(user_id: int):
     with db.engine.begin() as connection:
         result = connection.execute(
