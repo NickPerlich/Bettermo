@@ -66,10 +66,10 @@ Removes the specified user from the group
 
 ```json
 {
-    'deleted_user_id': "int"
-    'name': "string",
-    'email': "string",
-    'phone': "string"
+    "deleted_user_id": "int",
+    "name": "string",
+    "email": "string",
+    "phone": "string"
 }
 ```
 
