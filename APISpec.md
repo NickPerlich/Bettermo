@@ -131,7 +131,7 @@ Recieves the outstanding balance between user1 and user2, including balance from
 
 ### 3.3. Resolve Balance - `/users/{uid1}/pay/{uid2}` (POST)
 
-Adds a transaction between user1 and user2, modifying their current balance.
+Adds a transaction between user1 and user2, modifying their current balance. This represents user1 paying user2.
 
 **Request**:
 
@@ -167,7 +167,7 @@ Returns a table of every user to whom user_id owes money to or is owed by.
 
 ### 3.5. Resolve all Debts - `/{user_id}/resolve_balance` (POST)
 
-Searches all users that user_id owns money to and resolves them.
+Searches all users that user_id owes money to and resolves them.
 
 **Returns**:
 
