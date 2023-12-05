@@ -86,7 +86,7 @@ def delete_user_from_group(group_id: int, user_id: int):
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
 
-@router.post("/{group_id}/add_user/{user_id}")
+@router.post("/{group_id}/users/{user_id}")
 def post_add_user_to_group(group_id: int, user_id: int):
 
     with db.engine.begin() as connection:
