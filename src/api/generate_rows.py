@@ -1,5 +1,7 @@
 from random_username import generate
 import random
+import csv
+import pandas as pd
 
 def spam_users(n):
     usernames = generate.generate_username(n)
@@ -13,7 +15,11 @@ def spam_users(n):
 
     res = []
     for i in range(n):
-        res.append([usernames[i], emails[i], phones[i]])
+        res.append({"id": i, 
+            "name": usernames[i],
+            "email": emails[i],
+            "phone": phones[i]
+            })
     
     return res
 
@@ -26,9 +32,15 @@ def spam_groups(n, users):
         userindex = random.randint(0, len(users)-1)
         groupindex = random.randint(0, len(group_names)-1)
 
-        name = users[userindex][0] + "'s" + group_names[groupindex]
+        name = users[userindex]["name"] + "'s" + group_names[groupindex]
         description = group_descriptions[groupindex]
-        groups.append([name, description, userindex])
+        groups.append(
+            {
+                "id": i,
+                "name": name,
+                "description": description
+            }
+        )
     return groups
 
 def spam_users_in_group(n, groups, users):
@@ -36,26 +48,48 @@ def spam_users_in_group(n, groups, users):
     users_per_group = n // len(groups)
     print(users_per_group)
     res = []
+    group_lists = [[] for i in range(len(groups))]
 
     for i in range(n):
         userindex = random.randint(0, len(users)-1)
         groupindex = random.randint(0, len(groups)-1)
 
-        res.append([userindex, groupindex])
+        res.append({
+            "id": i,
+            "user_id": userindex,
+            "group_id": groupindex
+        })
+        group_lists[groupindex].append(userindex)
 
-    return res
 
-def spam_transactions(n, users_per_groups):
+    return res, group_lists
+
+def spam_transactions(n, groups, group_lists):
     
     descriptions = ['Groceries', 'Furniture', 'Airbnb', 'Thingymabob', 'Rent', 'Plumber']
 
     transactions = []
+    print(group_lists[1000])
 
     for i in range(n):
         price = random.randint(10, 1000)
-        index = random.randint(0, len(users_per_groups)-1)
         description = descriptions[random.randint(0, len(descriptions)-1)]
-        transactions.append(users_per_groups[index][1], users_per_groups[index][0], description, price)
+
+        group_l = []
+        while len(group_l) < 2:
+            index = random.randint(0, len(group_lists)-1)
+            group_l = group_lists[index]
+        
+        #find out which indices to use
+        u1 = random.randint(0, len(group_l)-1)
+        u2 = random.randint(0, len(group_l)-1)
+
+        transactions.append({
+            "id": i,
+            "from_user": group_l[u1],
+            "to_user": group_l[u2],
+            "value": price 
+        })
 
     return transactions
 
@@ -65,8 +99,20 @@ users = spam_users(100000)
 
 groups = spam_groups(50000, users)
 
-users_per_groups = spam_users_in_group(250000, groups, users)
+users_per_groups, group_lists = spam_users_in_group(250000, groups, users)
 
-transactions = spam_transactions(600000, users_per_groups)
+transactions = spam_transactions(600000, users_per_groups, group_lists)
 
-print()
+def writecsv(filename, data):
+    df = pd.DataFrame(data)
+    df.to_csv(filename)
+
+print(users[:5])
+print(groups[:5])
+print(users_per_groups[:5])
+print(transactions[:5])
+
+writecsv('csvs/users.csv',  users)
+writecsv('csvs/groups.csv',  groups)
+writecsv('csvs/users_to_group.csv',  users_per_groups)
+writecsv('csvs/transactions.csv',  transactions)
