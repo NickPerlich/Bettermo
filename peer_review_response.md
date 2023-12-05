@@ -53,7 +53,7 @@
 
  ## Sebastian Thau
  ### Accepted Responses
-- [ ] Only success booleans are returned, consider adding status codes and error messages
+- [done] Only success booleans are returned, consider adding status codes and error messages
 - [ ] Column Constraints - For columns like name, email, and phone, consider adding a max length or other constraints to ensure you are getting the data you want.
 - [ ] _Table Descriptions - descriptions for tables and columns can be helpful for understanding the purpose of each component_ 
 - [ ] _Update - add an endpoint to update groups or user information. This will be more RESTful_
