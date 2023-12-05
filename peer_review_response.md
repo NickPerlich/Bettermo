@@ -19,7 +19,7 @@
 ### Accepted Resonpses
 - [done] Change FastAPI Setup to not say 'Central Coast Cauldrons' but Bettermo
 - [ ] _Add API Key_ (Will add if we have time, not the top priority)
-- [ ] Make API Descriptions in Spec more specific (again do this after all other changes)
+- [done] Make API Descriptions in Spec more specific (again do this after all other changes)
 - [ ] _Update example flows to match spec_
 - [done] Could make schema in users table not accept null values, because a user with null name and etc. does not make sense.
 - [ ] _Using the service, I think it would be nice to have a functionality to have a way for all of my outstanding non-zero balances shown in a get._
