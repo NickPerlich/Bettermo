@@ -4,7 +4,7 @@
 
 ### 1.1. New User - `/users/create_user` (POST)
 
-Creates a new user account with specified information.
+Creates a new user given a name, phone number, and email.
 
 **Request**:
 
@@ -48,7 +48,7 @@ Creates a new group with specified information.
 
 ### 2.2. Add User to Group - `/groups/{group_id}/addUser/{user_id}` (POST)
 
-Adds the specified user to the specified group 
+Adds user with uid user_id to group with gid group_id.
 
 **Returns**:
 
@@ -60,8 +60,7 @@ Adds the specified user to the specified group
 
 ### 2.3 Remove User - `/groups/{group_id}/users/{user_id}` (DELETE)
 
-Removes the specified user from the group
-
+Deletes user with uid user_id from group with gid group_id by deleting them from the users_to_group table.
 **Returns**:
 
 ```json
@@ -75,7 +74,7 @@ Removes the specified user from the group
 
 ### 2.4 Get Members - `/groups/{group_id}` (GET)
 
-Lists all users in the specified group.
+Lists all users in the group with gid group_id.
 
 **Returns**:
 
