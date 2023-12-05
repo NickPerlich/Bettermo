@@ -82,10 +82,10 @@ Lists all users in the specified group.
 ```json
 [
   {
-    'user_id': "int"
-    'name': "string",
-    'email': "string",
-    'phone': "string"
+    "user_id": "int",
+    "name": "string",
+    "email": "string",
+    "phone": "string"
   },
   ...
 ]
@@ -158,9 +158,9 @@ Returns a table of every user to whom user_id owes money to or is owed by.
 ```json
 {
     "Balance Breakdown": [
-                            ['user_id', amount],
-                            ['user_id', amount],
-                            ['user_id', amount],
+                            {"user_id": "amount" /* amount is an int */},
+                            {"user_id": "amount"},
+                            {"user_id": "amount"},
                             ...
                          ]  
 }
