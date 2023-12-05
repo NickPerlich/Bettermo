@@ -46,7 +46,7 @@ Creates a new group with specified information.
 }
 ``` 
 
-### 2.2. Add User to Group - `/groups/{group_id}/add_user/{user_id}` (POST)
+### 2.2. Add User to Group - `/groups/{group_id}/users/{user_id}` (POST)
 
 Adds user with uid user_id to group with gid group_id.
 
