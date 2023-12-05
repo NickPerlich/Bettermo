@@ -18,7 +18,6 @@
 ## Ivan Nghi
 ### Accepted Resonpses
 - [done] Change FastAPI Setup to not say 'Central Coast Cauldrons' but Bettermo
-- [ ] _Add API Key_ (Will add if we have time, not the top priority)
 - [done] Make API Descriptions in Spec more specific (again do this after all other changes)
 - [done] _Update example flows to match spec_
 - [done] Could make schema in users table not accept null values, because a user with null name and etc. does not make sense.
@@ -27,6 +26,7 @@
 
 ### Unaccepted Responses
 - _Make use of the other fields asked for in the /users endpoint, or get rid of it, makes it seem like extra unused information asked for._ While we understand this, for the completeness of the project, we are going to keep it. If we are simulating a full application, the extra fields help define the domain in which we are working.
+- _Add API Key_ (Will add if we have time, not the top priority)
 
 ### Already Addressed Responses
 - Removing a user from the group is not implemented like the API spec mentioned. You could implement it for that functionality.
@@ -36,9 +36,9 @@
 ## Keveh Ghalambor
 ### Accepted Responses
 - [done] Make the description for api payloads more descriptive
-- [ ] _Add default values to inputs_
+- [done] _Add default values to inputs_
 - [done] _Be more consistent with how you name variables, some are named with camelBack, while others use underscores_
-- [ ] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
+- [done] _Going to your home page reveals a row when it probably shouldn't_. Check if this is the case.
 
 ### Unaccepted Responses
 - _There seems to be a lot of tables that are not listed in your ER diagram_. An ER diagram is not supposed to be a 1 to 1 representation of the database. Our uploaded ER diagram should be suffiecient.
@@ -54,11 +54,11 @@
  ## Sebastian Thau
  ### Accepted Responses
 - [done] Only success booleans are returned, consider adding status codes and error messages
-- [ ] Column Constraints - For columns like name, email, and phone, consider adding a max length or other constraints to ensure you are getting the data you want.
-- [ ] _Table Descriptions - descriptions for tables and columns can be helpful for understanding the purpose of each component_ 
-- [ ] _Update - add an endpoint to update groups or user information. This will be more RESTful_
+- [done] Column Constraints - For columns like name, email, and phone, consider adding a max length or other constraints to ensure you are getting the data you want.
+- [done] _Update - add an endpoint to update groups or user information. This will be more RESTful_
 
  ### Unaccepted Responses
+- _Table Descriptions - descriptions for tables and columns can be helpful for understanding the purpose of each component_ we believe our tables are pretty simple in their design and therefore do not require more explanation
 - _For some of your endpoints you guys return a success boolean and for others an id. You may want to return both for all of them just to give more information._ We return a success value when the user does not need the id for future calls.
  - _You might want to add more columns to capture additional information. For example, you might want to include an amount column in your purchases table or additional details in the users_to_group table._ We understand this. Adding columns will add unnecessary complexity for the data we need to communicate, however. If we add more complex endpoints, we can explore this further for sure.
  - _Data Types - Use varchar instead of text if there's a maximum length for the data._ Not a bad idea, but we don't really have a maximum text length for the description at the moment. The text type is also very performant in PostGres.

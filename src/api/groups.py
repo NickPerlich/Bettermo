@@ -16,6 +16,27 @@ class Group(BaseModel):
     name: str
     description: str
 
+@router.put("/{group_id}/update_group")
+def update_group_info(group_id: int, new_group:Group):
+    try:
+        with db.engine.begin() as connection:
+            connection.execute(
+                """
+                UPDATE groups
+                SET name = :name, description = :description
+                where id = :gid
+                """,
+                {
+                    'gid': group_id,
+                    'name': new_group.name,
+                    'description': new_group.description
+                }
+            )
+        return "OK"
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
+
+
 @router.post("/create_group")
 def create_group(new_group: Group):
     try:

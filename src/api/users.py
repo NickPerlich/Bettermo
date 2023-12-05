@@ -21,6 +21,28 @@ class Payment(BaseModel):
     amount: float
     description: str
 
+
+@router.put("/{user_id}/update_user")
+def update_user_info(user_id: int, new_user: User):
+    try:
+        with db.engine.begin() as connection:
+            connection.execute(
+                """
+                UPDATE users 
+                SET name = :name, email = :email, phone = :phone
+                where id = :id
+                """,
+                {
+                    'id': user_id,
+                    'name': new_user.name,
+                    'email': new_user.email,
+                    'phone': new_user.phone
+                }
+            )
+        return "OK"
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
+
 @router.post("/create_user")
 def create_user(new_user: User):
     try:
@@ -95,27 +117,21 @@ def get_balance_breakdown(user_id: int):
             result = connection.execute(
                 sqlalchemy.text(
                     '''
-                    WITH outbound AS (
-                    SELECT SUM(value) AS amount, to_user AS user_id
-                    FROM transactions
-                    WHERE from_user = 101
-                    GROUP BY to_user
-                    ),
-                    inbound AS (
-                        SELECT SUM(value) AS amount, from_user AS user_id
+                    with outbound as (
+                        SELECT to_user, COALESCE(SUM(value), 0) amount
                         FROM transactions
-                        WHERE to_user = 101
-                        GROUP BY from_user
+                        WHERE from_user = :uid1
+                        group by to_user
+                    ),
+                    inbound as (
+                        SELECT from_user, COALESCE(SUM(value), 0) amount
+                        FROM transactions
+                        WHERE to_user = :uid1
+                        group by from_user
                     )
-                    SELECT user_id, amount
-                    FROM outbound
-                    WHERE amount > 0
-
-                    UNION
-
-                    SELECT user_id, -amount AS amount
-                    FROM inbound
-                    WHERE amount < 0
+                    SELECT inbound.from_user as user, (inbound.amount - outbound.amount) as amount
+                    FROM inbound 
+                    join outbound on inbound.from_user = outbound.to_user
                     '''
                 ),
                 {
@@ -126,34 +142,3 @@ def get_balance_breakdown(user_id: int):
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
 
-@router.post("/{user_id}/resolve_balance")
-def post_resolve_balance(user_id: int):
-    try:
-        with db.engine.begin() as connection:
-            result = connection.execute(
-                sqlalchemy.text(
-                    '''
-                    SELECT to_user AS user, SUM(value) AS amount
-                    FROM transactions
-                    WHERE from_user = 101
-                    GROUP BY user
-                    '''
-                ),
-                {
-                    'uid1': user_id
-                }
-            ).fetchall()
-
-            for i in result:
-                id = connection.execute(sqlalchemy.text("""INSERT INTO transactions (from_user, to_user, value)
-                                                        VALUES (:user1, :user2, ROUND(:payment, 2))
-                                                        RETURNING id
-                                                    """), {
-                                                        'user1': user_id,
-                                                        'user2': i[0],
-                                                        'payment': i[1]
-                                                    }).scalar_one()
-
-        return {"All balances settled"}
-    except DBAPIError as error:
-        print(f"Error returned: <<<{error}>>>")
