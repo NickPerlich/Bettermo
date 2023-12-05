@@ -56,6 +56,36 @@ def get_group(group_id: int):
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
 
+@router.delete("/{group_id}/users/{user_id}")
+def delete_user_from_group(group_id: int, user_id: int):
+    try:
+        with db.engine.begin() as connection:
+            result = connection.execute(
+                sqlalchemy.text('''select user_id, name, email, phone
+                                from users_to_group
+                                join users on user_id = users.id
+                                where group_id = :gid and user_id = :uid
+                                order by user_id'''), {
+                                    'gid': group_id,
+                                    'uid': user_id
+                                })
+            connection.execute(
+                sqlalchemy.text('''delete
+                                from users_to_group
+                                where group_id = :gid and user_id = :uid'''), {
+                                    'gid': group_id,
+                                    'uid': user_id
+                                }
+            )
+            return {
+                'deleted_user_id': result.user_id,
+                'name': result.name,
+                'email': result.email,
+                'phone': result.phone
+            }
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
+
 @router.post("/{group_id}/addUser/{user_id}")
 def post_add_user_to_group(group_id: int, user_id: int):
 
