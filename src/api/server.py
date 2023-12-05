@@ -10,17 +10,17 @@ from .. import database as db
 import sqlalchemy
 
 description = """
-Bettermo is your choice for keeping track of shared expenses!
+Central Coast Cauldrons is the premier ecommerce site for all your alchemical desires.
 """
 
 app = FastAPI(
-    title="Bettermo",
+    title="Central Coast Cauldrons",
     description=description,
     version="0.0.1",
     terms_of_service="http://example.com/terms/",
     contact={
-        "names": "Nicholas Hotelling, Nick Perlich, Pau Minuet, Joe Simopoulos",
-        "email": "nhotelli@calpoly.edu",
+        "name": "Lucas Pierce",
+        "email": "lupierce@calpoly.edu",
     },
 )
 
@@ -44,4 +44,7 @@ async def validation_exception_handler(request, exc):
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the better version of V**mo"}
+    with db.engine.begin() as connection:
+        row = connection.execute(sqlalchemy.text("SELECT * FROM users")).first().name
+    return {"message": "Welcome to the better version o",
+            "row":row}

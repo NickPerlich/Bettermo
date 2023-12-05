@@ -23,7 +23,7 @@
 - [ ] _Update example flows to match spec_
 - [done] Could make schema in users table not accept null values, because a user with null name and etc. does not make sense.
 - [done] _Using the service, I think it would be nice to have a functionality to have a way for all of my outstanding non-zero balances shown in a get._
-- [ ] Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction._ This is a little vague, but we should look into it, make sure it is behaving correctly.
+- [done] Also some issues when splitting between two people in a group, not sure if the intention is for it to be only split amongst the other people in he group excluding the person who initiated the transaction._ This is a little vague, but we should look into it, make sure it is behaving correctly.
 
 ### Unaccepted Responses
 - _Make use of the other fields asked for in the /users endpoint, or get rid of it, makes it seem like extra unused information asked for._ While we understand this, for the completeness of the project, we are going to keep it. If we are simulating a full application, the extra fields help define the domain in which we are working.
@@ -53,13 +53,13 @@
 
  ## Sebastian Thau
  ### Accepted Responses
-- [ ] _For some of your endpoints you guys return a success boolean and for others an id. You may want to return both for all of them just to give more information._
 - [ ] Only success booleans are returned, consider adding status codes and error messages
 - [ ] Column Constraints - For columns like name, email, and phone, consider adding a max length or other constraints to ensure you are getting the data you want.
 - [ ] _Table Descriptions - descriptions for tables and columns can be helpful for understanding the purpose of each component_ 
 - [ ] _Update - add an endpoint to update groups or user information. This will be more RESTful_
 
  ### Unaccepted Responses
+- _For some of your endpoints you guys return a success boolean and for others an id. You may want to return both for all of them just to give more information._ We return a success value when the user does not need the id for future calls.
  - _You might want to add more columns to capture additional information. For example, you might want to include an amount column in your purchases table or additional details in the users_to_group table._ We understand this. Adding columns will add unnecessary complexity for the data we need to communicate, however. If we add more complex endpoints, we can explore this further for sure.
  - _Data Types - Use varchar instead of text if there's a maximum length for the data._ Not a bad idea, but we don't really have a maximum text length for the description at the moment. The text type is also very performant in PostGres.
 - _Possibly use singular names for your table names, so instead of groups, you might want to use group. This aligns with the convention where table names usually represent a single entity._ We believe that the names we currently have are good because the table groups contains multiple groups for example.
