@@ -126,7 +126,7 @@ Recieves the outstanding balance between user1 and user2, including balance from
 
 ### 3.3. Resolve Individual Balance - `/users/{user_id}/pay/{other_user_id}` (POST)
 
-Adds a transaction between user1 and user2, modifying their current balance. This represents user1 paying user2.
+Adds a transaction between user and other_user, modifying their current balance. This represents user paying other_user.
 
 **Request**:
 
