@@ -51,7 +51,7 @@ Run 3: 112.493 ms
 Avg: __110.849__ ms
 
 
-## /groups endpoinst
+## /groups endpoints
 
 ### PUT /groups/{group_id}/update_group
 Run 1: 0.432 ms
