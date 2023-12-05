@@ -27,17 +27,20 @@ def update_user_info(user_id: int, new_user: User):
     try:
         with db.engine.begin() as connection:
             connection.execute(
-                """
-                UPDATE users 
-                SET name = :name, email = :email, phone = :phone
-                where id = :id
-                """,
-                {
-                    'id': user_id,
-                    'name': new_user.name,
-                    'email': new_user.email,
-                    'phone': new_user.phone
-                }
+                sqlalchemy.text(
+                    """
+                    UPDATE users 
+                    SET name = :name, email = :email, phone = :phone
+                    where id = :id
+                    """
+                ),
+                    {
+                        'id': user_id,
+                        'name': new_user.name,
+                        'email': new_user.email,
+                        'phone': new_user.phone
+                    }
+                
             )
         return "OK"
     except DBAPIError as error:
@@ -54,7 +57,7 @@ def create_user(new_user: User):
                                                         'phone': new_user.phone
                                                     }).scalar_one()
     
-        return {'new_user_id': id}
+            return {'new_user_id': id}
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
 
@@ -102,7 +105,7 @@ def post_payment(user_id: int, other_user_id: int, payment: Payment):
                                                     }).scalar_one()
             connection.execute(sqlalchemy.text("""INSERT INTO settlements (description, transaction_id)
                                                     VALUES (:desc, :tid)"""), {
-                                                        'desc': payment.description,
+                                                         'desc': payment.description,
                                                         'tid': id
                                                     })
             
@@ -138,7 +141,13 @@ def get_balance_breakdown(user_id: int):
                     'uid1': user_id
                 }
             ).fetchall()
-        return {"Balance Breakdown": result}
+            
+            #Put returned values into json format
+            result_dict = {}
+            for item in result:
+                result_dict[item[0]] = item[1]
+            
+        return {"Balance Breakdown": result_dict}
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
 

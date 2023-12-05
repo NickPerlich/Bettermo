@@ -21,11 +21,13 @@ def update_group_info(group_id: int, new_group:Group):
     try:
         with db.engine.begin() as connection:
             connection.execute(
-                """
-                UPDATE groups
-                SET name = :name, description = :description
-                where id = :gid
-                """,
+                sqlalchemy.text(
+                    """
+                    UPDATE groups
+                    SET name = :name, description = :description
+                    where id = :gid
+                    """
+                ),
                 {
                     'gid': group_id,
                     'name': new_group.name,
@@ -101,11 +103,14 @@ def delete_user_from_group(group_id: int, user_id: int):
                                     'uid': user_id
                                 }
             )
+
+            result = result.first()
+            print(result[0])
             return {
-                'deleted_user_id': result.user_id,
-                'name': result.name,
-                'email': result.email,
-                'phone': result.phone
+                'deleted_user_id': result[0],
+                'name': result[1],
+                'email': result[2],
+                'phone': result[3]
             }
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
