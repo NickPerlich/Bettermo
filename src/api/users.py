@@ -123,18 +123,19 @@ def get_balance_breakdown(user_id: int):
                     with outbound as (
                         SELECT to_user, COALESCE(SUM(value), 0) amount
                         FROM transactions
-                        WHERE from_user = :uid1
+                        WHERE from_user = :uid1 AND to_user != :uid1
                         group by to_user
                     ),
                     inbound as (
                         SELECT from_user, COALESCE(SUM(value), 0) amount
                         FROM transactions
-                        WHERE to_user = :uid1
+                        WHERE to_user = :uid1 and from_user != :uid1
                         group by from_user
                     )
-                    SELECT inbound.from_user as user, (inbound.amount - outbound.amount) as amount
+                    SELECT coalesce(inbound.from_user, outbound.to_user) as user,
+                         (coalesce(inbound.amount, 0) - coalesce(outbound.amount, 0)) as amount
                     FROM inbound 
-                    join outbound on inbound.from_user = outbound.to_user
+                    cross join outbound on inbound.from_user = outbound.to_user
                     '''
                 ),
                 {
