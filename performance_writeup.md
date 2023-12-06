@@ -1,4 +1,33 @@
-# Initil Profiling
+# Performance Writeup
+
+## 1. Fake Data Modeling
+
+1. We decided to generate rows in the following proportions:
+
+   users = 1                 => 100,000
+   
+   group = 0.5               =>  50,000
+   
+   users_in_groups = 2.5     => 250,000
+   
+   transactions = 6          => 600,000
+   
+   TOTAL                      1,000,000
+   
+This means that there will be half as many groups as users, meaning that each user will be in 2.5 groups on average. Each group will have 5 users, and each user will have paid someone 6 times on average.
+
+Link of the Python script used to generate the data:
+src/api/generate_rows.py 
+
+
+
+
+
+
+
+## 2. Performance of each Endpoint
+
+# Initial Profiling
 ## /users endpoints
 
 ### PUT /{user_id}/update_user
