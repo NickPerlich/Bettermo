@@ -61,7 +61,7 @@ def get_groups_of_user(user_id: int):
                 }
             ).all()
         return {
-            [x.group_id for x in info]
+            "groups": [x.group_id for x in info]
         }
     except DBAPIError as error:
         print("ouch")
