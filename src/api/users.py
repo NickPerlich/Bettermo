@@ -21,6 +21,50 @@ class Payment(BaseModel):
     amount: float
     description: str
 
+@router.get("/{user_id}")
+def get_user_info(user_id: int):
+    try:
+        with db.engine.begin() as connection:
+            info = connection.execute(
+                sqlalchemy.text(
+                """
+                SELECT name, email, phone
+                from users
+                where id = :id
+                """
+                ),
+                {
+                    'id': user_id
+                }
+            ).first()
+        return {
+            "name": info.name,
+            "email": info.email,
+            "phone": info.phone
+        }
+    except DBAPIError as error:
+        print("ouch")
+@router.get("/{user_id}/groups")
+def get_groups_of_user(user_id: int):
+    try:
+        with db.engine.begin() as connection:
+            info = connection.execute(
+                sqlalchemy.text(
+                """
+                SELECT group_id
+                from users_to_group
+                where user_id = :id
+                """
+                ),
+                {
+                    'id': user_id
+                }
+            ).all()
+        return {
+            [x.group_id for x in info]
+        }
+    except DBAPIError as error:
+        print("ouch")
 
 @router.put("/{user_id}/update_user")
 def update_user_info(user_id: int, new_user: User):
