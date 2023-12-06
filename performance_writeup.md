@@ -16,6 +16,8 @@
    
 This means that there will be half as many groups as users, meaning that each user will be in 2.5 groups on average. Each group will have 5 users, and each user will have paid someone 6 times on average.
 
+We expect our service to scale in this way, because after a group is formed, we expect users to be paying others that are in at least one group with them. Also, we make more transactions than users or groups, because we expect a group to be used many times.
+
 Link of the Python script used to generate the data:
 src/api/generate_rows.py 
 
