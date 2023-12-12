@@ -47,5 +47,4 @@ async def validation_exception_handler(request, exc):
 async def root():
     with db.engine.begin() as connection:
         row = connection.execute(sqlalchemy.text("SELECT * FROM users")).first()
-    return {"message": "Welcome to the better version o",
-            "row":row}
+    return 'Ok'
