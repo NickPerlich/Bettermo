@@ -1,8 +1,7 @@
 from fastapi import FastAPI, exceptions
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
-#from src.api import audit, carts, catalog, bottler, barrels, admin
-from src.api import users, groups
+from src.api import create, workouts, calculate, logs
 import json
 import logging
 import sys
@@ -10,17 +9,17 @@ from .. import database as db
 import sqlalchemy
 
 description = """
-Bettermo is your choice for keeping track of shared expenses!
+Like OF, but with workouts lmao
 """
 
 app = FastAPI(
-    title="Bettermo",
+    title="GYM-APP",
     description=description,
     version="0.0.1",
     terms_of_service="http://example.com/terms/",
     contact={
-        "names": "Nicholas Hotelling, Nick Perlich, Pau Minuet, Joe Simopoulos",
-        "email": "nhotelli@calpoly.edu",
+        "name": "Pau Minguet",
+        "email": "pminguet@calpoly.edu",
     },
 )
 
@@ -28,8 +27,10 @@ app = FastAPI(
 
 
 #app.include_router(audit.router)
-app.include_router(users.router)
-app.include_router(groups.router)
+app.include_router(create.router)
+app.include_router(workouts.router)
+app.include_router(logs.router)
+app.include_router(calculate.router)
 
 @app.exception_handler(exceptions.RequestValidationError)
 @app.exception_handler(ValidationError)
@@ -44,4 +45,7 @@ async def validation_exception_handler(request, exc):
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the better version of V**mo"}
+    with db.engine.begin() as connection:
+        row = connection.execute(sqlalchemy.text("SELECT * FROM users")).first()
+    return {"message": "Welcome to the better version o",
+            "row":row}
