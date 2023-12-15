@@ -48,15 +48,24 @@ def get_split(split_id):
                 workout['name'] = i[1]
                 workout['day_of_week'] = i[2]
                 workout['duration'] = i[3]
-                e = connection.execute(sqlalchemy.text("""
+                ex = connection.execute(sqlalchemy.text("""
                                                        SELECT e.name, w.max, w.sets, w.reps, w.percent_max_weight, w.rest_secs
                                                        from workout_steps w
                                                        join exercises e on e.id = w.exercise_id
                                                        where w.workout_id = :id
                                                        """), {'id': i[0]}).fetchall()
-                for i in range(len(e)):
-                    e[i] = list(e[i])
-                workout['steps'] = e
+                dics = []
+                for i in ex:
+                    d = {}
+                    d['name'] = i[0]
+                    d['max'] = i[1]
+                    d['sets'] = i[2]
+                    d['reps'] = i[3]
+                    d['percent_max_weight'] = i[4]
+                    d['rest_secs'] = i[5]
+                    dics.append(d)
+                
+                workout['steps'] = dics
                 split['workouts'].append(workout)
 
             print(workout)
