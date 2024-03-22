@@ -1,7 +1,7 @@
 from fastapi import FastAPI, exceptions
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
-from src.api import create, workouts, calculate, logs
+from src.api import importData
 import json
 import logging
 import sys
@@ -9,11 +9,11 @@ from .. import database as db
 import sqlalchemy
 
 description = """
-Like OF, but with workouts lmao
+___
 """
 
 app = FastAPI(
-    title="GYM-APP",
+    title="FANTASY PREMIER LEAGUE STATS",
     description=description,
     version="0.0.1",
     terms_of_service="http://example.com/terms/",
@@ -25,12 +25,7 @@ app = FastAPI(
 
 
 
-
-#app.include_router(audit.router)
-app.include_router(create.router)
-app.include_router(workouts.router)
-app.include_router(logs.router)
-app.include_router(calculate.router)
+app.include_router(importData.router)
 
 @app.exception_handler(exceptions.RequestValidationError)
 @app.exception_handler(ValidationError)
@@ -47,4 +42,5 @@ async def validation_exception_handler(request, exc):
 async def root():
     with db.engine.begin() as connection:
         row = connection.execute(sqlalchemy.text("SELECT * FROM users")).first()
-    return 'Ok'
+        print(row[2])
+    return row[2]

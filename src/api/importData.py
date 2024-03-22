@@ -6,15 +6,46 @@ import sqlalchemy
 from src import database as db
 from operator import itemgetter
 from sqlalchemy.exc import DBAPIError
+import requests
+import sys
+from unidecode import unidecode
+import getTeams
 
 router = APIRouter(
-    prefix="/workouts",
-    tags=["workouts"],
+    prefix="/importData",
+    tags=["importData"],
     #dependencies=[Depends(auth.get_api_key)],
 )
 
 
-@router.get("/split/{split_id}")
+
+@router.get("/update-teams")
+def update_times():
+    teams = getTeams.fetch_team_data()
+
+    print(teams)
+
+    try:
+        with db.engine.begin() as connection:
+            workout_times = connection.execute(sqlalchemy.text("""  select w.id, sum(ws.sets * :time_for_set + (ws.sets-1) * ws.rest_secs), count(*)
+                                                            from splits s 
+                                                            join workouts w on w.split_id = s.id
+                                                            join workout_steps ws on ws.workout_id = w.id
+                                                            where s.id = :split_id
+                                                            group by w.id
+                                                        """), {'time_for_set': time_for_set,
+                                                                'split_id': split_id
+                                                                }).fetchall()
+     
+    
+        return "Ok"
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
+
+
+
+
+@router.get("/players")
 def get_split(split_id):
     try:
         split = {}
@@ -80,6 +111,9 @@ def get_split(split_id):
         print(f"Error returned: <<<{error}>>>")
 
 
+
+
+
 @router.get("/update-times/{split_id}")
 def update_times(split_id):
 
@@ -128,3 +162,25 @@ def update_times(split_id):
     except DBAPIError as error:
         print(f"Error returned: <<<{error}>>>")
 
+class Weight(BaseModel):
+    user_id: int
+    exercise_id: int
+    weight: float
+    reps: int
+
+@router.post("/exercise")
+def log_exercise(new_weight: Weight):
+    try:
+        with db.engine.begin() as connection:
+            id = connection.execute(sqlalchemy.text("""INSERT INTO logs (user_id, exercise_id, weight, reps, onerm) 
+                                                    VALUES (:user_id, :exercise_id, :weight, :reps, :onerm) RETURNING id"""), {
+                                                        'user_id': new_weight.user_id,
+                                                        'exercise_id': new_weight.exercise_id,
+                                                        'weight': new_weight.weight,
+                                                        'reps': new_weight.reps,
+                                                        'onerm': round(new_weight.weight*(1+(new_weight.reps/30)),2)
+                                                    }).scalar_one()
+    
+        return {'new_weight_id': id}
+    except DBAPIError as error:
+        print(f"Error returned: <<<{error}>>>")
