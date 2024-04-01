@@ -13,7 +13,7 @@ ___
 """
 
 app = FastAPI(
-    title="FANTASY PREMIER LEAGUE STATS",
+    title="tutorAI",
     description=description,
     version="0.0.1",
     terms_of_service="http://example.com/terms/",
