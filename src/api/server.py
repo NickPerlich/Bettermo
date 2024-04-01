@@ -46,3 +46,13 @@ async def root():
         row = connection.execute(sqlalchemy.text("SELECT * FROM users")).first()
         print(row[2])
     return row[2]
+
+
+
+
+
+
+
+
+
+
