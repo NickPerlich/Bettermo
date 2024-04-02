@@ -106,7 +106,6 @@ def update_times(input: InputPDF):
 
 
 
-
 model_id = "intfloat/e5-small-v2"
 api_url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{model_id}"
 headers = {"Authorization": f"Bearer {os.environ.get('HUGGINGFACE_API_TOKEN')}"}
