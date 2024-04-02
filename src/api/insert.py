@@ -107,7 +107,7 @@ def query(texts):
         return response.json()
 
 
-def insertChunks(lst, source, name, author, link, source):
+def insertChunks(lst, source, name, author, link):
 
     lst = [chunk for chunk in lst if len(chunk) > 100]
 
@@ -117,10 +117,11 @@ def insertChunks(lst, source, name, author, link, source):
         with db.engine.begin() as connection:
             for text, embedding in zip(lst, embeddings):  
                 if text != '':
-                    connection.execute(sqlalchemy.text("insert into items (text_value, embedding, source) values (:text, :embedding, ':YT');")
-            , {"text": text, "embedding": embedding, "source": source})
+                    connection.execute(sqlalchemy.text("insert into items (text_value, embedding, source, name, author, link) values (:text, :embedding, ':source', ':name', ':author', 'link');")
+            , {"text": text, "embedding": embedding, "source": source, "name": name, "author": author, "link": link})
      
         return "Ok"
+    
     except DBAPIError as error:
      
         print(f"Error returned: <<<{error}>>>")
