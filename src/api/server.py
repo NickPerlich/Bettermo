@@ -1,7 +1,7 @@
 from fastapi import FastAPI, exceptions
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
-from src.api import insertEmbedding, searchVectorDB, insertPDF
+from src.api import searchVectorDB, insert
 import json
 import logging
 import sys
@@ -13,7 +13,7 @@ ___
 """
 
 app = FastAPI(
-    title="tutorAI",
+    title="__",
     description=description,
     version="0.0.1",
     terms_of_service="http://example.com/terms/",
@@ -23,10 +23,8 @@ app = FastAPI(
     },
 )
 
-
-app.include_router(insertPDF.router)
+app.include_router(insert.router)
 app.include_router(searchVectorDB.router)
-app.include_router(insertEmbedding.router)
 
 
 @app.exception_handler(exceptions.RequestValidationError)

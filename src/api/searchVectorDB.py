@@ -35,14 +35,15 @@ def searchVectorDB(text):
     try:
         with db.engine.begin() as connection:
             results = connection.execute(sqlalchemy.text(f"""
-    SELECT text_value , embedding <-> '{embedding}' AS distance
+    SELECT text_value
     FROM items 
+    WHERE length(text_value) > 100
     ORDER BY embedding <-> '{embedding}'
     LIMIT 10;
                                                 """)).fetchall()
         
 
-        return {"results": [{"text": result[0], "distance": result[1]} for result in results]}
+        return {"results": [{"text": result[0]} for result in results]}
     except DBAPIError as error:
      
         print(f"Error returned: <<<{error}>>>")
